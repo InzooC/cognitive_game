@@ -16,7 +16,7 @@ passport.use(new LocalStrategy({
         if (!user) {
           return cb(null, false, req.flash('error_messages', '帳號或密碼錯誤！'))
         }
-        if (user.password !== password) {
+        if (!bcrypt.compareSync(password, user.password)) {
           return cb(null, false, req.flash('error_messages', '帳號或密碼錯誤！'))
         }
         return cb(null, user)
