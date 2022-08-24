@@ -16,6 +16,7 @@ module.exports = {
       ({
         name: `user-${i}`,
         account: accounts[i],
+        password: '123',
         role: 'user',
         created_at: new Date(),
         updated_at: new Date()
@@ -25,7 +26,8 @@ module.exports = {
       [{
         name: 'admin',
         account: 'admin123',
-        password: await bcrypt.hash('123', 10),
+        // password: await bcrypt.hash('123', 10),
+        password: '123',
         role: 'admin',
         created_at: new Date(),
         updated_at: new Date()
