@@ -14,6 +14,8 @@ const SESSION_SECRET = 'secret'
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 
+
+app.use('/css', express.static('css'))
 app.use(express.urlencoded({ extended: true }))
 
 app.use(session({

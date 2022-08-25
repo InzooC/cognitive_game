@@ -2,8 +2,6 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 const loginController = require('../../controller/login-controller')
-const { generalErrorHandler } = require('../../middleware/error-handler')
-
 
 
 router.get('/admin', loginController.adminLoginPage)
