@@ -1,9 +1,10 @@
 const cardGameController = {
-  levelOne: (req, res, next) => {
-
-
-    res.render('cardgame-levelone')
-    
+  getlevelOne: async (req, res, next) => {
+    try {
+      res.render('cardgame-levelone')
+    } catch (err) {
+      next(err)
+    }
   }
 }
 

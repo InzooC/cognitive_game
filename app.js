@@ -16,6 +16,7 @@ app.set('view engine', 'handlebars')
 
 
 app.use('/css', express.static('css'))
+app.use('/servers', express.static('servers'))
 app.use(express.urlencoded({ extended: true }))
 
 app.use(session({
@@ -34,8 +35,6 @@ app.use((req, res, next) => {
 })
 
 app.use(routes)
-
-
 
 app.listen(port, () => {
   console.log(`Game app is listening on port ${port}`)
