@@ -17,7 +17,8 @@ const Symbols = [
 
 const utility = {
   getRandomNumberArray(count) {
-    const numberArray = Array.from(Array(count).keys());
+    const array = Array.from(Array(count).keys())
+    const numberArray = array.map((index) => index + 1)
     for (let index = numberArray.length - 1; index > 0; index--) {
       let randomIndex = Math.floor(Math.random() * (index - 1));
       [numberArray[index], numberArray[randomIndex]] = [numberArray[randomIndex], numberArray[index]]
@@ -36,8 +37,9 @@ const view = {
     return `<div data-index="${index}" class="card back"></div>`
   },
   getCardContent(index) {
-    let number = this.transformNumber((index % 13) + 1)
-    let symbol = Symbols[Math.floor(index / 13)]
+    let number = this.transformNumber(index)
+    // let number = index
+    let symbol = Symbols[0] //先用黑桃
     return `
     <p>${number}</p>
       <img src="${symbol}" alt="">
@@ -57,14 +59,8 @@ const view = {
   },
   transformNumber(number) {
     switch (number) {
-      case 1:
-        return 'A'
-      case 11:
-        return 'J'
-      case 12:
-        return 'Q'
-      case 13:
-        return 'K'
+      case 10:
+        return 5
       default:
         return number
     }
@@ -90,7 +86,7 @@ const view = {
     })
   },
   showGameFinished() {
-    alert('恭喜達到100分')
+    alert('恭喜達到完成遊戲')  //! 改彈跳視窗，回到主選單
   }
 }
 
@@ -98,17 +94,10 @@ const view = {
 const model = {
   revealedCards: [],
   isCardMatched() {
-    // if (this.revealedCards[0].dataset.index % 13 === this.revealedCard[1].dataset.index % 13) {
-    //   return true
-    // } else if (!this.revealedCards[0].dataset.index % 13 === this.revealedCards[1].dataset.index % 13) {
-    //   return false
-    // }
-    // return this.revealedCards[0].dataset.index % 13 === this.revealedCards[1].dataset.index % 13
-
-    if (this.revealedCards[0].dataset.index % 13 === 12 && this.revealedCards[1].dataset.index % 13 === 12) {
-      return true //兩張都是13
-    } else if (((this.revealedCards[0].dataset.index % 13) + (this.revealedCards[1].dataset.index % 13)) === 11) {
-      return true  //加起來=13
+    if (((Number(this.revealedCards[0].dataset.index) + Number(this.revealedCards[1].dataset.index))) % 10 === 0) {
+      return true  //加起來=10
+    } else if ((Number(this.revealedCards[0].dataset.index) % 5 === 0 && + Number(this.revealedCards[1].dataset.index) % 5 === 0)) {
+      return true //兩個都是5的倍數
     } else {
       return false
     }
@@ -119,8 +108,8 @@ const model = {
 
 const control = {
   currentState: GAME_STATE.FirstCardWaits,
-  generateCards() {
-    view.displayCards(utility.getRandomNumberArray(52))
+  generateCards(cardNumber) {
+    view.displayCards(utility.getRandomNumberArray(cardNumber))
   },
   dispatchCardAction(card) {
     if (!card.classList.contains('back')) {
@@ -148,7 +137,7 @@ const control = {
           //score + 1
           model.score += 10
           view.renderScore(model.score)
-          if (model.score === 100) {
+          if (model.score === 50) {
             this.currentState = GAME_STATE.GameFinished
             setTimeout(view.showGameFinished, 200)
             // view.showGameFinished()
@@ -170,7 +159,7 @@ const control = {
   }
 }
 
-control.generateCards()
+control.generateCards(10)
 
 document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('click', onCLickCard => {
