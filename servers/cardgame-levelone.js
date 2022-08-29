@@ -1,3 +1,5 @@
+// const GameRecord = require('../models/gameRecord')
+
 const GAME_STATE = {
   FirstCardWaits: 'FirstCardWaits',
   SecondCardWaits: 'SecondCardWaits',
@@ -5,8 +7,6 @@ const GAME_STATE = {
   CardsMatched: 'CardsMatched',
   GameFinished: 'GameFinished'
 }
-
-//之後把邏輯改成 １－９（四個花色），加起來＝１０得分
 
 const Symbols = [
   'https://img.icons8.com/ios-glyphs/30/000000/spades--v1.png', // 黑桃
@@ -66,7 +66,6 @@ const view = {
     }
   },
   pairedCards(...cards) {
-    console.log(cards)
     cards.map(card => {
       card.classList.add('paired')
     })
@@ -117,13 +116,11 @@ const control = {
     }
     switch (this.currentState) {
       case GAME_STATE.FirstCardWaits:
-        console.log('第一張牌 :' + card.dataset.index)
         view.flipCards(card)
         model.revealedCards.push(card)
         this.currentState = GAME_STATE.SecondCardWaits
         break
       case GAME_STATE.SecondCardWaits:
-        console.log('第二張牌:' + card.dataset.index)
         //triedTime + 1 and render
         model.triedTimes += 1
         view.renderTriedTimes(model.triedTimes)
@@ -140,7 +137,11 @@ const control = {
           if (model.score === 50) {
             this.currentState = GAME_STATE.GameFinished
             setTimeout(view.showGameFinished, 200)
-            // view.showGameFinished()
+
+            //! 儲存這筆遊戲紀錄
+            this.postGameRecord()
+
+
           } else {
             this.currentState = GAME_STATE.FirstCardWaits
           }
@@ -156,7 +157,34 @@ const control = {
     view.flipCards(...model.revealedCards)
     model.revealedCards = []
     control.currentState = GAME_STATE.FirstCardWaits
+  },
+  postGameRecord() {
+    console.log('postGameRecord')
+    const score = document.querySelector('.score').innerHTML
+    const userId = document.querySelector('#userId').dataset.id
+    const item = {
+      score: 50,
+      userId: 18
+    }
+    console.log('item', item)
+    //! 還是沒辦法成功傳 JSON，只能傳x-www-form-urlencoded....
+
+    fetch('/gamerecords/cglevelone', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        "Content-type": 'application/json;charset=utf-8'
+      }
+      // body: JSON.stringify(item)
+      // body: JSON.stringify({
+      //   name: 'oxxo',
+      //   age: 18
+      // })
+    })
+      .then(response => response.json())
+      .catch(error => console.error('Unable to add record.', error))
   }
+
 }
 
 control.generateCards(10)
@@ -164,6 +192,6 @@ control.generateCards(10)
 document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('click', onCLickCard => {
     control.dispatchCardAction(card)
-    console.log(control.currentState)
+    // console.log(control.currentState)
   })
 })
