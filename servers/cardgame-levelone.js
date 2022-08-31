@@ -161,7 +161,6 @@ const control = {
   postGameRecord() {
     console.log('postGameRecord')
     const score = document.querySelector('.score').innerHTML
-    const userId = document.querySelector('#userId').dataset.id
     const item = {
       score: 50,
       userId: 18
