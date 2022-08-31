@@ -1,4 +1,3 @@
-// const bodyParser = require('body-parser')
 const express = require('express')
 const { engine } = require('express-handlebars')
 const session = require('express-session')
