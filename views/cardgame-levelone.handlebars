@@ -7,8 +7,10 @@
   <h5 class="score">總得分: 0</h5>
   <p class="tried">已嘗試次數: 0 次</p>
 
-  {{!-- 返回功能未完成 --}}
-  <button action=>返回遊戲主頁</button>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#backToHme">
+    返回遊戲主頁
+  </button>
 </div>
 
 <!-- cards -->
@@ -19,5 +21,32 @@
     <p>5</p>
   </div>
 </div>
+
+
+
+<!-- backToHme Modal -->
+<div class="modal fade" id="backToHme" tabindex="-1" aria-labelledby="backToHmeLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        {{!-- <h5 class="modal-title" id="backToHmeLabel">按確定可返回遊戲大廳</h5> --}}
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="margin: auto 0;">
+        <h5 style="text-align: center;">按確定可返回遊戲大廳</h5>
+        <h5 style="text-align: center;">
+          <span style=" color: orange;">注意</span>
+          ：遊戲將不會被存檔
+        </h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <a href="/" type="button" class="btn btn-primary">確定</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <script src="/servers/cardgame-levelone.js"></script>
