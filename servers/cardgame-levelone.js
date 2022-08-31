@@ -85,7 +85,8 @@ const view = {
     })
   },
   showGameFinished() {
-    alert('恭喜達到完成遊戲')  //! 改彈跳視窗，回到主選單
+    const myModal = new bootstrap.Modal(document.querySelector('#finishedGame'))
+    myModal.show()
   }
 }
 
@@ -121,7 +122,6 @@ const control = {
         this.currentState = GAME_STATE.SecondCardWaits
         break
       case GAME_STATE.SecondCardWaits:
-        //triedTime + 1 and render
         model.triedTimes += 1
         view.renderTriedTimes(model.triedTimes)
 
@@ -131,16 +131,13 @@ const control = {
           this.currentState = GAME_STATE.CardsMatched
           view.pairedCards(...model.revealedCards)
           model.revealedCards = []
-          //score + 1
           model.score += 10
           view.renderScore(model.score)
           if (model.score === 50) {
             this.currentState = GAME_STATE.GameFinished
             setTimeout(view.showGameFinished, 200)
 
-            //! 儲存這筆遊戲紀錄
-            this.postGameRecord()
-
+            this.postGameRecord() //儲存這筆資料
 
           } else {
             this.currentState = GAME_STATE.FirstCardWaits

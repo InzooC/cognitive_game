@@ -26,10 +26,9 @@
 
 <!-- backToHme Modal -->
 <div class="modal fade" id="backToHme" tabindex="-1" aria-labelledby="backToHmeLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        {{!-- <h5 class="modal-title" id="backToHmeLabel">按確定可返回遊戲大廳</h5> --}}
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" style="margin: auto 0;">
@@ -42,6 +41,24 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
         <a href="/" type="button" class="btn btn-primary">確定</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- finished game Modal -->
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="finishedGame" tabindex="-1"
+  aria-labelledby="finishedGameLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body" style="margin: auto 0;">
+        <h5 style="text-align: center;">完成卡片配對</h5>
+        <h5 style="text-align: center;">恭喜獲得50點</h5>
+      </div>
+      <div class="modal-footer">
+        <a href="/game/cardgame/levelone" type="button" class="btn btn-outline-primary">再玩一次</a>
+        <a href="/" type="button" class="btn btn-primary">返回遊戲大廳</a>
       </div>
     </div>
   </div>
