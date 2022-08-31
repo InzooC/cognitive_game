@@ -14,7 +14,7 @@ const Symbols = [
 ]
 
 const utility = {
-  getRandomNumberArray(count) {
+  getRandomNumberArray(count) {   //! 還沒改邏輯
     const array = Array.from(Array(count).keys())
     const numberArray = array.map((index) => index + 1)
     for (let index = numberArray.length - 1; index > 0; index--) {
@@ -25,7 +25,7 @@ const utility = {
   }
 }
 
-const view = {
+const view = {  //! 還沒改邏輯
   displayCards(randomIndex) {
     const rootElement = document.querySelector('#cards')
     let rawHTML = randomIndex.map((index) => this.getCardElement(index)).join('')
@@ -36,7 +36,6 @@ const view = {
   },
   getCardContent(index) {
     let number = this.transformNumber(index)
-    // let number = index
     let symbol = Symbols[0] //先用黑桃
     return `
     <p>${number}</p>
@@ -89,7 +88,7 @@ const view = {
 }
 
 
-const model = {
+const model = {  //! 還沒改邏輯
   revealedCards: [],
   isCardMatched() {
     if (((Number(this.revealedCards[0].dataset.index) + Number(this.revealedCards[1].dataset.index))) % 10 === 0) {
@@ -135,7 +134,7 @@ const control = {
             this.currentState = GAME_STATE.GameFinished
             setTimeout(view.showGameFinished, 200)
 
-            this.postGameRecord() //儲存這筆資料
+            this.postGameRecord()
 
           } else {
             this.currentState = GAME_STATE.FirstCardWaits
@@ -153,7 +152,7 @@ const control = {
     model.revealedCards = []
     control.currentState = GAME_STATE.FirstCardWaits
   },
-  postGameRecord() {
+  postGameRecord() { //! 還沒改儲存路由
     console.log('postGameRecord')
     const score = document.querySelector('.score').innerHTML
     const item = {
@@ -181,11 +180,13 @@ const control = {
 
 }
 
+const level = Number(document.querySelector('#gamelevel').dataset.level)
+console.log(level)
+
 control.generateCards(10)
 
 document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('click', onCLickCard => {
     control.dispatchCardAction(card)
-    // console.log(control.currentState)
   })
 })
