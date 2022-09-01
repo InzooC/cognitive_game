@@ -12,7 +12,7 @@ const cardGameController = {
     try {
       const user = req.user
       const cgLevelTwo = true
-      res.render('cardgame-levelTwo', { user, cgLevelTwo })
+      res.render('cardgame-leveltwo', { user, cgLevelTwo })
     } catch (err) {
       next(err)
     }
