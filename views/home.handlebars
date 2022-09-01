@@ -9,7 +9,7 @@
 
 <div class="row align-items-center">
   <div class="col-4" style="height: 200px;">
-    <h4>遊戲規則說明：</h4>
+    <h4>卡片配對遊戲規則：</h4>
     <p>請將數字相加等於10的兩張牌作配對。</p>
   </div>
   <div class="col-8">
@@ -20,8 +20,8 @@
       <div style="display: flex;justify-content: space-around;">
         <a href="/game/cardgame/levelone" class="btn btn-outline-secondary" style="font-size: 20px;" tabindex="-1"
           role="button" aria-disabled="true">普通關卡</a>
-        <a href="/game/cardgame/leveltwo" class="btn btn-outline-info" style="font-size: 20px;" tabindex="-1" role="button"
-          aria-disabled="true">中等關卡</a>
+        <a href="/game/cardgame/leveltwo" class="btn btn-outline-info" style="font-size: 20px;" tabindex="-1"
+          role="button" aria-disabled="true">中等關卡</a>
         <a href="/" class="btn btn-outline-primary" style="font-size: 20px;" tabindex="-1" role="button"
           aria-disabled="true">高等關卡</a>
         <a href="/" class="btn btn-outline-danger" style="font-size: 20px;" tabindex="-1" role="button"
@@ -29,13 +29,51 @@
       </div>
     </div>
     <div>
-      <h5>過去最佳成績</h5>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">普通關卡:</li>
-        <li class="list-group-item">中等關卡:</li>
-        <li class="list-group-item">高等關卡:</li>
-        <li class="list-group-item">挑戰關卡:</li>
-      </ul>
+      <h5>遊戲紀錄</h5>
+      <table class="table text-center">
+        <thead>
+          <tr class="table-secondary">
+            <th scope="col">關卡等級</th>
+            <th scope="col">成功挑戰次數</th>
+            <th scope="col">累積得分</th>
+            <th scope="col">最快完成時間</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">普通關卡</th>
+            <td>{{levelone.trail}}</td>
+            <td>{{levelone.point}}</td>
+            <td>@資料維修中</td>
+          </tr>
+          <tr>
+            <th scope="row">中等關卡</th>
+            <td>{{leveltwo.trail}}</td>
+            <td>{{leveltwo.point}}</td>
+            <td>@資料維修中</td>
+          </tr>
+          <tr>
+            <th scope="row">高等關卡</th>
+            <td>{{levelthree.trail}}</td>
+            <td>{{levelthree.point}}</td>
+            <td>@資料維修中</td>
+          </tr>
+          <tr>
+            <th scope="row">挑戰關卡</th>
+            <td>{{levelfour.trail}}</td>
+            <td>{{levelfour.point}}</td>
+            <td>@資料維修中</td>
+          </tr>
+        <tfoot>
+          <th scope="row">全部關卡</th>
+          <td>{{total.trail}}</td>
+          <td>{{total.point}}</td>
+          <td>@資料維修中</td>
+        </tfoot>
+
+        </tbody>
+      </table>
+
     </div>
 
   </div>
