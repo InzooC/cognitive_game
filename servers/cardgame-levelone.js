@@ -154,13 +154,11 @@ const control = {
     control.currentState = GAME_STATE.FirstCardWaits
   },
   postGameRecord() {
-    console.log('postGameRecord')
     const score = document.querySelector('.score').innerHTML
     const item = {
       score: 50,
       userId: 18
     }
-    console.log('item', item)
     //! 還是沒辦法成功傳 JSON，只能傳x-www-form-urlencoded....
 
     fetch('/gamerecords/cglevelone', {
@@ -186,6 +184,5 @@ control.generateCards(10)
 document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('click', onCLickCard => {
     control.dispatchCardAction(card)
-    // console.log(control.currentState)
   })
 })

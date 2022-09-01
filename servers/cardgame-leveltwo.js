@@ -14,7 +14,7 @@ const Symbols = [
 ]
 
 const utility = {
-  getRandomNumberArray(count) {   //! 還沒改邏輯
+  getRandomNumberArray(count) {
     const array = Array.from(Array(count).keys())
     const numberArray = array.map((index) => index + 1)
     for (let index = numberArray.length - 1; index > 0; index--) {
@@ -25,7 +25,7 @@ const utility = {
   }
 }
 
-const view = {  //! 還沒改邏輯
+const view = {
   displayCards(randomIndex) {
     const rootElement = document.querySelector('#cards')
     let rawHTML = randomIndex.map((index) => this.getCardElement(index)).join('')
@@ -35,8 +35,10 @@ const view = {  //! 還沒改邏輯
     return `<div data-index="${index}" class="card back"></div>`
   },
   getCardContent(index) {
-    let number = this.transformNumber(index)
-    let symbol = Symbols[0] //先用黑桃
+    let remainder = index % 10
+    let quotient = Math.floor(index / 10)
+    let number = this.transformNumber(remainder)
+    let symbol = Symbols[quotient] //! 目前花色有變化，但需要再討論
     return `
     <p>${number}</p>
       <img src="${symbol}" alt="">
@@ -54,12 +56,12 @@ const view = {  //! 還沒改邏輯
 
     })
   },
-  transformNumber(number) {
-    switch (number) {
-      case 10:
+  transformNumber(remainder) {
+    switch (remainder) {
+      case 0:
         return 5
       default:
-        return number
+        return remainder
     }
   },
   pairedCards(...cards) {
@@ -87,7 +89,6 @@ const view = {  //! 還沒改邏輯
   }
 }
 
-
 const model = {  //! 還沒改邏輯
   revealedCards: [],
   isCardMatched() {
@@ -105,8 +106,21 @@ const model = {  //! 還沒改邏輯
 
 const control = {
   currentState: GAME_STATE.FirstCardWaits,
-  generateCards(cardNumber) {
+  generateCards(level) {
+    const cardNumber = this.decideCardNumber(level)
     view.displayCards(utility.getRandomNumberArray(cardNumber))
+  },
+  decideCardNumber(level) {
+    switch (level) {
+      case 1:
+        return 10
+      case 2:
+        return 20
+      case 3:
+        return 30
+      case 4:
+        return 40
+    }
   },
   dispatchCardAction(card) {
     if (!card.classList.contains('back')) {
@@ -130,12 +144,10 @@ const control = {
           model.revealedCards = []
           model.score += 10
           view.renderScore(model.score)
-          if (model.score === 50) {
+          if (model.score === 100) {
             this.currentState = GAME_STATE.GameFinished
             setTimeout(view.showGameFinished, 200)
-
             this.postGameRecord()
-
           } else {
             this.currentState = GAME_STATE.FirstCardWaits
           }
@@ -152,17 +164,17 @@ const control = {
     model.revealedCards = []
     control.currentState = GAME_STATE.FirstCardWaits
   },
-  postGameRecord() { //! 還沒改儲存路由
-    console.log('postGameRecord')
+  postGameRecord() {
+
     const score = document.querySelector('.score').innerHTML
     const item = {
       score: 50,
       userId: 18
     }
-    console.log('item', item)
+
     //! 還是沒辦法成功傳 JSON，只能傳x-www-form-urlencoded....
 
-    fetch('/gamerecords/cglevelone', {
+    fetch('/gamerecords/cgleveltwo', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -181,9 +193,8 @@ const control = {
 }
 
 const level = Number(document.querySelector('#gamelevel').dataset.level)
-console.log(level)
 
-control.generateCards(10)
+control.generateCards(level)
 
 document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('click', onCLickCard => {
