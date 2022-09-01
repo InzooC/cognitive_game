@@ -17,6 +17,8 @@ const utility = {
   getRandomNumberArray(count) {
     const array = Array.from(Array(count).keys())
     const numberArray = array.map((index) => index + 1)
+    const addCards = [21, 22, 29, 28]
+    numberArray.push(...addCards)  //多加4張牌
     for (let index = numberArray.length - 1; index > 0; index--) {
       let randomIndex = Math.floor(Math.random() * (index - 1));
       [numberArray[index], numberArray[randomIndex]] = [numberArray[randomIndex], numberArray[index]]
@@ -144,7 +146,7 @@ const control = {
           model.revealedCards = []
           model.score += 10
           view.renderScore(model.score)
-          if (model.score === 100) {
+          if (model.score === 120) {
             this.currentState = GAME_STATE.GameFinished
             setTimeout(view.showGameFinished, 200)
             this.postGameRecord()

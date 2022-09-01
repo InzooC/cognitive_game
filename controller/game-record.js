@@ -41,7 +41,7 @@ const gameRecordsController = {
       })
       const userId = req.user.id
       const record = await GameRecord.create({
-        point: 100, // !還沒有用fetch成功傳point進來       
+        point: 150, // !還沒有用fetch成功傳point進來       
         userId,
         gameLevelId: gameLevel.toJSON().id
       })

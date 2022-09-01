@@ -36,7 +36,6 @@
 }
 
 .back {
-  /* background: url('https://assets-lighthouse.alphacamp.co/uploads/image/file/9222/ExportedContentImage_00.png'); */
   background: url('https://i.imgur.com/QFG9fM1.png');
   background-size: cover;
 }
@@ -48,6 +47,7 @@
 #header {
   display: flex;
   margin: 0 auto;
+  margin-bottom: 10px;
   flex-direction: column;
   align-items: flex-end;
   width: 85%;
@@ -60,9 +60,9 @@
   justify-content: flex-end;
 }
 
-#header .title img {
+/* #header .title img {
   max-width: 3em;
-}
+} */
 
 #header .title h2 {
   padding-left: 0.5em;

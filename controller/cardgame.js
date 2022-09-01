@@ -2,7 +2,8 @@ const cardGameController = {
   getlevelOne: async (req, res, next) => {
     try {
       const user = req.user
-      res.render('cardgame-levelone', { user })
+      const cgLevelOne = true
+      res.render('cardgame-levelone', { user, cgLevelOne })
     } catch (err) {
       next(err)
     }
@@ -10,7 +11,8 @@ const cardGameController = {
   getlevelTwo: async (req, res, next) => {
     try {
       const user = req.user
-      res.render('cardgame-levelTwo', { user })
+      const cgLevelTwo = true
+      res.render('cardgame-levelTwo', { user, cgLevelTwo })
     } catch (err) {
       next(err)
     }
