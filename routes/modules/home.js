@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const { Op } = require("sequelize")
 const db = require('../../models')
 const User = db.User
 const GameRecord = db.GameRecord
@@ -8,48 +9,88 @@ const Level = db.Level
 const Game = db.Game
 const sequelize = db.sequelize
 
-// 輸出trail&point的函式
-function outputData(dataArr) {
-  let trail = dataArr.length
-  let pointCount = 0
-  dataArr.forEach(e => {
-    pointCount += Number(e.point)
+// 輸出各level的trail&point的函式
+async function outputData(data) {
+
+  const levelOneId = (await Level.findOne({ where: { level_name: 'level1' }, nest: true, raw: true })).id
+  const levelTwoId = (await Level.findOne({ where: { level_name: 'level2' }, nest: true, raw: true })).id
+  const levelThreeId = (await Level.findOne({ where: { level_name: 'level3' }, nest: true, raw: true })).id
+  const levelFourId = (await Level.findOne({ where: { level_name: 'level4' }, nest: true, raw: true })).id
+
+  const outPut = {
+    levelOne: {
+      trail: 0,
+      pointCount: 0
+    },
+    levelTwo: {
+      trail: 0,
+      pointCount: 0
+    },
+    levelThree: {
+      trail: 0,
+      pointCount: 0
+    },
+    levelFour: {
+      trail: 0,
+      pointCount: 0
+    },
+    total: {
+      trail: 0,
+      pointCount: 0
+    }
+  }
+  data.forEach(e => {
+    switch (e.gameLevelId) {
+      case levelOneId:
+        outPut.levelOne.trail += 1
+        outPut.levelOne.pointCount += Number(e.point)
+        break
+      case levelTwoId:
+        outPut.levelTwo.trail += 1
+        outPut.levelTwo.pointCount += Number(e.point)
+        break
+      case levelThreeId:
+        outPut.levelThree.trail += 1
+        outPut.levelThree.pointCount += Number(e.point)
+        break
+      case levelFourId:
+        outPut.levelFour.trail += 1
+        outPut.levelFour.pointCount += Number(e.point)
+        break
+    }
   })
-  return { trail: trail, pointCount: pointCount }
+  //! 可以再優化
+  outPut.total.trail = (outPut.levelOne.trail + outPut.levelTwo.trail + outPut.levelThree.trail + outPut.levelFour.trail)
+  outPut.total.pointCount = (outPut.levelOne.pointCount + outPut.levelTwo.pointCount + outPut.levelThree.pointCount + outPut.levelFour.pointCount)
+  return outPut
 }
 
 router.get('/', async (req, res, next) => {
   try {
     const user = req.user
-    //! 是否可用關聯簡化？
-    const cardGame = await Game.findOne({ where: { game_name: 'Match 10 Card Game' } })
-    const level = await Level.findOne({ where: { level_name: 'level1' } })
-    const gameLevel = await GameLevel.findOne({
+    const cardGame = await Game.findOne({ where: { game_name: 'Match 10 Card Game' }, nest: true, raw: true })
+    const gameLevel = await GameLevel.findAll({
       where: {
-        game_id: cardGame.toJSON().id,
-        level_id: level.toJSON().id
+        game_id: cardGame.id
       },
       nest: true,
       raw: true
     })
-
-    const leveloneRawData = await GameRecord.findAll({
+    const gameLevelIdArr = gameLevel.map(e => e.id)
+    const cardGameRecords = await GameRecord.findAll({
       where: {
         user_id: user.id,
-        game_level_id: gameLevel.id
+        game_level_id: {
+          [Op.or]: gameLevelIdArr
+        }
       },
-      attributes: ['id', 'point', 'userId', 'gameLevelId', 'createdAt'
-        // [sequelize.literal('(SELECT COUNT(*) FROM GameRecords WHERE game_level_id = gameLevel)'), 'trailCount']  //!之後優化再直接撈次數
-      ],
+      attributes: ['id', 'point', 'userId', 'gameLevelId', 'createdAt'],
       nest: true,
       raw: true
     })
-    // console.log('levelonedata', levelonedata)
 
-    const data = outputData(leveloneRawData)
-    console.log('data', data)
+    const data = await outputData(cardGameRecords)
     res.render('home', { data })
-
   } catch (err) {
     next(err)
   }

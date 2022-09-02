@@ -37,37 +37,43 @@
             <th scope="col">成功挑戰次數</th>
             <th scope="col">累積得分</th>
             <th scope="col">最快完成時間</th>
+            <th scope="col">最近一次遊玩時間</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">普通關卡</th>
-            <td>{{data.trail}}</td>
-            <td>{{data.pointCount}}</td>
+            <td>{{data.levelOne.trail}}</td>
+            <td>{{data.levelOne.pointCount}}</td>
+            <td>@資料維修中</td>
             <td>@資料維修中</td>
           </tr>
           <tr>
             <th scope="row">中等關卡</th>
-            <td>{{leveltwo.trail}}</td>
-            <td>{{leveltwo.pointCount}}</td>
+            <td>{{data.levelTwo.trail}}</td>
+            <td>{{data.levelTwo.pointCount}}</td>
+            <td>@資料維修中</td>
             <td>@資料維修中</td>
           </tr>
           <tr>
             <th scope="row">高等關卡</th>
-            <td>{{levelthree.trail}}</td>
-            <td>{{levelthree.pointCount}}</td>
+            <td>{{data.levelThree.trail}}</td>
+            <td>{{data.levelThree.pointCount}}</td>
+            <td>@資料維修中</td>
             <td>@資料維修中</td>
           </tr>
           <tr>
             <th scope="row">挑戰關卡</th>
-            <td>{{levelfour.trail}}</td>
-            <td>{{levelfour.pointCount}}</td>
+            <td>{{data.levelFour.trail}}</td>
+            <td>{{data.levelFour.pointCount}}</td>
+            <td>@資料維修中</td>
             <td>@資料維修中</td>
           </tr>
         <tfoot>
           <th scope="row">全部關卡</th>
-          <td>{{total.trail}}</td>
-          <td>{{total.pointCount}}</td>
+          <td>{{data.total.trail}}</td>
+          <td>{{data.total.pointCount}}</td>
+          <td>@資料維修中</td>
           <td>@資料維修中</td>
         </tfoot>
 
