@@ -9,6 +9,7 @@ const gameRecordsController = {
   cardGameLevelOne: async (req, res, next) => {
     console.log('成功到cardGameLevelOne')
     try {
+          //! 是否可用關聯簡化？
       const cardGame = await Game.findOne({ where: { game_name: 'Match 10 Card Game' } })
       const level = await Level.findOne({ where: { level_name: 'level1' } })
       const gameLevel = await GameLevel.findOne({
