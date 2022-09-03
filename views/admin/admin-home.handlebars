@@ -1,0 +1,71 @@
+<nav class="navbar navbar-light bg-light mb-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="font-size: 30px;">大腦訓練遊戲網站個案管理中心</a>
+    <form class="d-flex" action="/login/logout" method="POST">
+      <button class="btn btn-outline-success" type="submit">登出</button>
+    </form>
+  </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">學員資料列表</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+      aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-pills">
+          <a href="/admin/addMember" class="btn btn-outline-primary" tabindex="-1" role="button" aria-disabled="true">
+            <i class="fa-solid fa-user-plus" style="margin:0 2px 0 0"></i>
+            新增學員</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<table class="table text-center">
+  <thead>
+    <tr class="table-secondary">
+      <th scope="col">序號</th>
+      <th scope="col">姓名</th>
+      <th scope="col">年齡</th>
+      <th scope="col">主診斷</th>
+      <th scope="col">最近一次遊玩時間</th>
+      <th scope="col">查看成績</th>
+      <th scope="col">編輯資料</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">資料維修中</th>
+      <td>@資料維修中</td>
+      <td>@資料維修中</td>
+      <td>@資料維修中</td>
+      <td>@資料維修中</td>
+      <td><a href="/admin/game-record/:1"><i class="fa-solid fa-magnifying-glass"></i></a></td>
+      <td><a href="/admin/edit/:1"><i class="fa-solid fa-pen-to-square"></i></a></td>
+    </tr>
+
+    {{#each users}}
+    <tr>
+      <th scope="row">{{this.account}}</th>
+      <td>{{this.name}}</td>
+      <td>{{this.age}}</td>
+      <td>{{this.dx}}</td>
+      <td><a href="/admin/game-record/{{this.id}}"><i class="fa-solid fa-magnifying-glass"></i></a></td>
+      <td><a href="/admin/edit/{{this.id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+</div>
+
+</div>
