@@ -9,6 +9,8 @@ const Level = db.Level
 const Game = db.Game
 const sequelize = db.sequelize
 
+//! 把程式碼重構去controller
+
 // 輸出各level的trail&point的函式
 async function outputData(data) {
 
