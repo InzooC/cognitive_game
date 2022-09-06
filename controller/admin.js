@@ -5,8 +5,6 @@ const { Op } = require('sequelize')
 const adminController = {
   HomePage: async (req, res, next) => {
     try {
-
-      //! 排除密碼
       const users = await User.findAll(
         {
           where: { role: { [Op.not]: 'admin' } },
@@ -14,20 +12,12 @@ const adminController = {
           raw: true,
           nest: true
         })
-
-
-      console.log(users)
-
       res.render('admin/admin-home', { users })
     } catch (err) { next(err) }
   },
   addMemberPage: async (req, res, next) => {
     try {
-      res.send('addMemberPage')
-
-
-
-
+      res.render('admin/add-member')
     } catch (err) { next(err) }
 
 

@@ -1,0 +1,56 @@
+<nav class="navbar navbar-light bg-light mb-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="font-size: 30px;">大腦訓練遊戲網站個案管理中心</a>
+    <form class="d-flex" action="/login/logout" method="POST">
+      <button class="btn btn-outline-success" type="submit">登出</button>
+    </form>
+  </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
+  <div class="container-fluid">
+    <h4 class="navbar-brand" href="#">新增學員 </h4>
+  </div>
+</nav>
+
+<div class="row" style="justify-content: center;">
+  <div class="col-6">
+    <form>
+      <div class="mb-3">
+        <label for="name" class="form-label">姓名</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+
+      <div class="mb-3">
+        <div>
+          <label for="gender" class="form-label">性別</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="genderOptions" id="men" value="1" required>
+          <label class="form-check-label" for="men">男</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="genderOptions" id="women" value="2" required>
+          <label class="form-check-label" for="women">女</label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="birthday" class="form-label">生日</label>
+        <input type="date" class="form-control" id="birthday" name="birthday">
+      </div>
+
+      <div class="mb-4">
+        <label for="class" class="form-label">班別</label>
+        <select class="form-select" aria-label="class" id="class" name="class" required>
+          <option selected disabled value="">請選擇班別</option>
+          <option value="1">社區復健</option>
+          <option value="2">日照中心</option>
+        </select>
+
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>

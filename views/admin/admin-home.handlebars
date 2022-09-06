@@ -48,8 +48,9 @@
     <tr>
       <th scope="row">{{this.account}}</th>
       <td>{{this.name}}</td>
-      <td>{{this.age}}</td>
-      <td>{{this.dx}}</td>
+      <td>{{#if this.age}}{{this.age}}{{else}}@資料維修中{{/if}}</td>
+      <td>{{#if this.dx}}{{this.dx}}{{else}}@資料維修中{{/if}}</td>
+      <td>{{#if this.currentPlay}}{{this.currentPlay}}{{else}}@資料維修中{{/if}}</td>
       <td><a href="/admin/game-record/{{this.id}}"><i class="fa-solid fa-magnifying-glass"></i></a></td>
       <td><a href="/admin/edit/{{this.id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
     </tr>
