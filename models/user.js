@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     age: DataTypes.STRING,
     gender: DataTypes.STRING,
-    dx: DataTypes.STRING,
-    account: DataTypes.STRING,
+    classId: DataTypes.INTEGER,
+    account: DataTypes.INTEGER,
     password: DataTypes.STRING,
     role: DataTypes.STRING
   }, {
@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function (models) {
     // associations can be defined here
     User.hasMany(models.GameRecord, { foreignKey: 'userId' })
+    User.belongsTo(models.Class, { foreignKey: 'classId' })
   }
   return User;
 };

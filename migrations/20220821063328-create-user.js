@@ -17,8 +17,12 @@ module.exports = {
       gender: {
         type: Sequelize.STRING
       },
-      dx: {
-        type: Sequelize.STRING
+      class_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Classes',
+          key: 'id'
+        }
       },
       account: {
         type: Sequelize.STRING
