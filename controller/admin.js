@@ -20,8 +20,6 @@ const adminController = {
   addMemberPage: async (req, res, next) => {
     try {
       const classes = await Class.findAll({ raw: true, nest: true })
-      console.log(classes)
-
       res.render('admin/add-member', { classes })
     } catch (err) { next(err) }
 
@@ -30,6 +28,7 @@ const adminController = {
   addMember: async (req, res, next) => {
     try {
       const newMember = req.body
+      console.log('newMember', newMember)
       const accounts = await User.findAll({
         where: { role: { [Op.not]: 'admin' } },
         attributes: ['account'],
@@ -37,7 +36,6 @@ const adminController = {
         nest: true
       })
       const accountsNumber = await accounts.map((e) => { return Number(e.account) })
-      console.log(accountsNumber)
       const newAccount = generateAccount(accountsNumber)
       function generateAccount(accountsNumber) {
         let newAccount = (Math.floor(Math.random() * 899) + 100)
@@ -48,6 +46,9 @@ const adminController = {
       }
       User.create({
         name: newMember.name,
+        birthday: newMember.birthday,
+        gender: newMember.gender,
+        classId: newMember.class,
         account: newAccount,
         password: await bcrypt.hash('123', 10),
         role: 'user',
