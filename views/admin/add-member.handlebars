@@ -44,8 +44,9 @@
         <label for="class" class="form-label">班別</label>
         <select class="form-select" aria-label="class" id="class" name="class" required>
           <option selected disabled value="">請選擇班別</option>
-          <option value="1">社區復健</option>
-          <option value="2">日照中心</option>
+          {{#each classes}}
+          <option value="{{this.id}}">{{this.name}}</option>
+          {{/each}}
         </select>
 
       </div>

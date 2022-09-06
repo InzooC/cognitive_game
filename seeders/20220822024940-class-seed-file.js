@@ -7,7 +7,7 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date()
     }, {
-      name: '長照中心',
+      name: '社區復健',
       created_at: new Date(),
       updated_at: new Date()
     }]

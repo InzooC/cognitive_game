@@ -1,5 +1,6 @@
 const db = require('../models')
 const User = db.User
+const Class = db.Class
 const { Op } = require('sequelize')
 const bcrypt = require('bcrypt')
 
@@ -18,7 +19,10 @@ const adminController = {
   },
   addMemberPage: async (req, res, next) => {
     try {
-      res.render('admin/add-member')
+      const classes = await Class.findAll({ raw: true, nest: true })
+      console.log(classes)
+
+      res.render('admin/add-member', { classes })
     } catch (err) { next(err) }
 
 
