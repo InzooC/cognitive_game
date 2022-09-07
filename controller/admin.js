@@ -3,6 +3,7 @@ const User = db.User
 const Class = db.Class
 const { Op } = require('sequelize')
 const bcrypt = require('bcrypt')
+const { raw } = require('body-parser')
 
 const adminController = {
   HomePage: async (req, res, next) => {
@@ -28,7 +29,6 @@ const adminController = {
   addMember: async (req, res, next) => {
     try {
       const newMember = req.body
-      console.log('newMember', newMember)
       const accounts = await User.findAll({
         where: { role: { [Op.not]: 'admin' } },
         attributes: ['account'],
@@ -56,7 +56,7 @@ const adminController = {
         updated_at: new Date()
       })
 
-      res.send('post addMember')
+      res.redirect(`/admin/confirm/${newAccount}`)
 
     } catch (err) { next(err) }
 
@@ -64,11 +64,18 @@ const adminController = {
   },
   confirmNewMember: async (req, res, next) => {
     try {
-      res.send('confirmNewMember')
-
-
-
-
+      const account = req.params.account
+      const member = await User.findOne({ where: { account }, raw: true, nest: true })
+      const className = await Class.findByPk(member.classId, { attributes: ['name'], raw: true, nest: true })
+      res.render('admin/confirm-newmember', { member, className: className.name })
+    } catch (err) { next(err) }
+  },
+  editMember: async (req, res, next) => {
+    try {
+      const account = req.params.account
+      const member = await User.findOne({ where: { account }, raw: true, nest: true })
+      const className = await Class.findByPk(member.classId, { attributes: ['name'], raw: true, nest: true })
+      res.render('admin/confirm-newmember', { member, className: className.name })
     } catch (err) { next(err) }
   }
 }

@@ -1,18 +1,19 @@
 const express = require('express')
-const { engine } = require('express-handlebars')
 const session = require('express-session')
 const flash = require('connect-flash')
-
+const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const routes = require('./routes')
 const passport = require('./config/passport')
-
 const app = express()
 const port = process.env.PORT || 3000
 const SESSION_SECRET = 'secret'
 
-app.engine('handlebars', engine())
-app.set('view engine', 'handlebars')
+const { create } = require('express-handlebars')
+const helpers = create({ helpers: handlebarsHelpers })
 
+app.engine('handlebars', helpers.engine)
+app.set('view engine', 'handlebars')
+app.set('views', './views')
 
 app.use('/css', express.static('css'))
 app.use('/servers', express.static('servers'))

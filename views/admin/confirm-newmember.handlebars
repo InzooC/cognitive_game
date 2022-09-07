@@ -1,0 +1,59 @@
+<nav class="navbar navbar-light bg-light mb-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="font-size: 30px;">大腦訓練遊戲網站個案管理中心</a>
+    <form class="d-flex" action="/login/logout" method="POST">
+      <button class="btn btn-outline-success" type="submit">登出</button>
+    </form>
+  </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
+  <div class="container-fluid">
+    <h3 class="navbar-brand">預覽新增學員之資料 </h3>
+  </div>
+</nav>
+
+<div class="row" style="justify-content: center;">
+  <div class="col-6">
+    <form>
+      <div class="mb-3">
+        <label for="name" class="form-label">序號</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{member.account}}" disabled>
+      </div>
+
+      <div class="mb-3">
+        <label for="name" class="form-label">姓名</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{member.name}}" disabled>
+      </div>
+
+      <div class="mb-3">
+        <div>
+          <label for="gender" class="form-label">性別</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="men" value="1" {{#ifCond member.gender '1' }}
+            checked {{/ifCond}} disabled>
+          <label class="form-check-label" for="men">男</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="women" value="2" {{#ifCond member.gender '2' }}
+            checked {{/ifCond}} disabled>
+          <label class="form-check-label" for="women">女</label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="birthday" class="form-label">生日</label>
+        <input type="date" class="form-control" id="birthday" name="birthday" value="P{{member.birthday}}" disabled>
+      </div>
+      <div class="mb-4">
+        <label for="class" class="form-label">班別</label>
+        <select class="form-select" aria-label="class" id="class" name="class">
+          <option value="1" selected disabled>{{className}}</option>
+        </select>
+      </div>
+    </form>
+    <a href="/admin/home" class="btn btn-primary">確認送出</a>
+    <a href="/admin/edit/{{member.account}}" class="btn btn-primary">修改資料</a>
+  </div>
+</div>
