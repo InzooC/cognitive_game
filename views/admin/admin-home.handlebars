@@ -35,8 +35,7 @@
     <tr class="table-secondary">
       <th scope="col">序號</th>
       <th scope="col">姓名</th>
-      <th scope="col">年齡</th>
-      <th scope="col">主診斷</th>
+      <th scope="col">班級</th>
       <th scope="col">最近一次遊玩時間</th>
       <th scope="col">查看成績</th>
       <th scope="col">編輯資料</th>
@@ -48,8 +47,7 @@
     <tr>
       <th scope="row">{{this.account}}</th>
       <td>{{this.name}}</td>
-      <td>{{#if this.age}}{{this.age}}{{else}}@資料維修中{{/if}}</td>
-      <td>{{#if this.dx}}{{this.dx}}{{else}}@資料維修中{{/if}}</td>
+      <td>{{#if this.classId}}{{this.Class.name}}{{else}}@資料維修中{{/if}}</td>
       <td>{{#if this.currentPlay}}{{this.currentPlay}}{{else}}@資料維修中{{/if}}</td>
       <td><a href="/admin/game-record/{{this.id}}"><i class="fa-solid fa-magnifying-glass"></i></a></td>
       <td><a href="/admin/edit/{{this.account}}"><i class="fa-solid fa-pen-to-square"></i></a></td>

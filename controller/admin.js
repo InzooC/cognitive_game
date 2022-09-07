@@ -12,6 +12,7 @@ const adminController = {
         {
           where: { role: { [Op.not]: 'admin' } },
           attributes: { exclude: 'password' },
+          include: [Class],
           raw: true,
           nest: true
         })
@@ -47,7 +48,6 @@ const adminController = {
 
       User.create({
         name: newMember.name,
-        birthday: newMember.birthday,
         gender: newMember.gender,
         classId: newMember.class,
         account: newAccount,
@@ -89,7 +89,6 @@ const adminController = {
       const member = await User.findOne({ where: { account } })
       await member.update({
         name: memberData.name || member.name,
-        birthday: memberData.birthday || member.birthday,
         gender: memberData.gender || member.gender,
         classId: memberData.class || member.classId,
       })
