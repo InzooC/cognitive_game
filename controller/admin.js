@@ -72,9 +72,11 @@ const adminController = {
       const account = req.params.account
       const member = await User.findOne({ where: { account }, raw: true, nest: true })
       const classes = await Class.findAll({ raw: true, nest: true })
-      const className = classes.find(e => e.id === member.classId).name
-      const index = classes.findIndex(e => e.id === member.classId)
-      classes.splice(index, 1)
+      const className = member.classId ? classes.find(e => e.id === member.classId).name : null
+      const index = member.classId ? classes.findIndex(e => e.id === member.classId) : null
+      if (index) {
+        classes.splice(index, 1)
+      }
       res.render('admin/edit-member', { member, className, classes })
     } catch (err) { next(err) }
   }
