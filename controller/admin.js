@@ -35,15 +35,16 @@ const adminController = {
         raw: true,
         nest: true
       })
+
       const accountsNumber = await accounts.map((e) => { return Number(e.account) })
-      const newAccount = generateAccount(accountsNumber)
-      function generateAccount(accountsNumber) {
-        let newAccount = (Math.floor(Math.random() * 899) + 100)
-        while (accountsNumber.includes(newAccount)) {
-          generateAccount(accountsNumber)
-        }
-        if (!accountsNumber.includes(newAccount)) { return newAccount }
+      let newAccount = generateAccount()
+      function generateAccount() {
+        return Math.floor(Math.random() * 9)
       }
+      while (accountsNumber.includes(newAccount)) {
+        newAccount = generateAccount()
+      }
+
       User.create({
         name: newMember.name,
         birthday: newMember.birthday,
@@ -55,12 +56,8 @@ const adminController = {
         created_at: new Date(),
         updated_at: new Date()
       })
-
       res.redirect(`/admin/confirm/${newAccount}`)
-
     } catch (err) { next(err) }
-
-
   },
   confirmNewMember: async (req, res, next) => {
     try {
@@ -74,8 +71,11 @@ const adminController = {
     try {
       const account = req.params.account
       const member = await User.findOne({ where: { account }, raw: true, nest: true })
-      const className = await Class.findByPk(member.classId, { attributes: ['name'], raw: true, nest: true })
-      res.render('admin/confirm-newmember', { member, className: className.name })
+      const classes = await Class.findAll({ raw: true, nest: true })
+      const className = classes.find(e => e.id === member.classId).name
+      const index = classes.findIndex(e => e.id === member.classId)
+      classes.splice(index, 1)
+      res.render('admin/edit-member', { member, className, classes })
     } catch (err) { next(err) }
   }
 }

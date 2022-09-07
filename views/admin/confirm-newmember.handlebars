@@ -49,11 +49,11 @@
       <div class="mb-4">
         <label for="class" class="form-label">班別</label>
         <select class="form-select" aria-label="class" id="class" name="class">
-          <option value="1" selected disabled>{{className}}</option>
+          <option value="{{member.classId}}" selected disabled>{{className}}</option>
         </select>
       </div>
     </form>
-    <a href="/admin/home" class="btn btn-primary">確認送出</a>
-    <a href="/admin/edit/{{member.account}}" class="btn btn-primary">修改資料</a>
+    <a href="/admin/home" class="btn btn-primary me-3">確認送出</a>
+    <a href="/admin/edit/{{member.account}}" class="btn btn-outline-primary">修改資料</a>
   </div>
 </div>
