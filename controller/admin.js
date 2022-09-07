@@ -39,9 +39,9 @@ const adminController = {
       const accountsNumber = await accounts.map((e) => { return Number(e.account) })
       let newAccount = generateAccount()
       function generateAccount() {
-        return Math.floor(Math.random() * 9)
+        return Math.floor(Math.random() * 899 + 100)
       }
-      while (accountsNumber.includes(newAccount)) {
+      while (accountsNumber.includes(newAccount)) {  //當序號重複，重新將newAccount附值
         newAccount = generateAccount()
       }
 
@@ -67,17 +67,34 @@ const adminController = {
       res.render('admin/confirm-newmember', { member, className: className.name })
     } catch (err) { next(err) }
   },
-  editMember: async (req, res, next) => {
+  editMemberPage: async (req, res, next) => {
     try {
       const account = req.params.account
       const member = await User.findOne({ where: { account }, raw: true, nest: true })
       const classes = await Class.findAll({ raw: true, nest: true })
       const className = member.classId ? classes.find(e => e.id === member.classId).name : null
       const index = member.classId ? classes.findIndex(e => e.id === member.classId) : null
-      if (index) {
+
+      if (index || index === 0) {
         classes.splice(index, 1)
       }
       res.render('admin/edit-member', { member, className, classes })
+    } catch (err) { next(err) }
+  },
+  editMember: async (req, res, next) => {
+    try {
+      const memberData = req.body
+      const account = req.params.account
+      console.log('memberData.class', memberData.class)
+      const member = await User.findOne({ where: { account } })
+      await member.update({
+        name: memberData.name || member.name,
+        birthday: memberData.birthday || member.birthday,
+        gender: memberData.gender || member.gender,
+        classId: memberData.class || member.classId,
+      })
+
+      res.redirect('/admin/home')
     } catch (err) { next(err) }
   }
 }
