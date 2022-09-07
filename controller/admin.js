@@ -14,7 +14,8 @@ const adminController = {
           attributes: { exclude: 'password' },
           include: [Class],
           raw: true,
-          nest: true
+          nest: true,
+          order: [['classId', 'ASC'], ['account', 'ASC']]
         })
       res.render('admin/admin-home', { users })
     } catch (err) { next(err) }
@@ -36,7 +37,6 @@ const adminController = {
         raw: true,
         nest: true
       })
-
       const accountsNumber = await accounts.map((e) => { return Number(e.account) })
       let newAccount = generateAccount()
       function generateAccount() {
@@ -45,7 +45,6 @@ const adminController = {
       while (accountsNumber.includes(newAccount)) {  //當序號重複，重新將newAccount附值
         newAccount = generateAccount()
       }
-
       User.create({
         name: newMember.name,
         gender: newMember.gender,

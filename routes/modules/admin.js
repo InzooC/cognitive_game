@@ -7,7 +7,7 @@ router.get('/addMember', adminController.addMemberPage)
 router.post('/addMember', adminController.addMember)
 router.get('/confirm/:account', adminController.confirmNewMember)
 router.get('/edit/:account', adminController.editMemberPage)
-router.post('/edit/:account', adminController.editMember)
+router.put('/edit/:account', adminController.editMember)
 
 
 module.exports = router

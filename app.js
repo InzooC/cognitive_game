@@ -4,6 +4,8 @@ const flash = require('connect-flash')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const routes = require('./routes')
 const passport = require('./config/passport')
+const methodOverride = require('method-override')
+
 const app = express()
 const port = process.env.PORT || 3000
 const SESSION_SECRET = 'secret'
@@ -18,6 +20,7 @@ app.set('views', './views')
 app.use('/css', express.static('css'))
 app.use('/servers', express.static('servers'))
 app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 app.use(session({
   secret: SESSION_SECRET,
