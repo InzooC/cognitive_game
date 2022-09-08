@@ -22,6 +22,20 @@ const utility = {
       [numberArray[index], numberArray[randomIndex]] = [numberArray[randomIndex], numberArray[index]]
     }
     return numberArray
+  },
+  startCount() {
+    if (model.timer == null) { // 如果timer為空 則開啟定時器
+      model.timer = setInterval(this.begin, 1000)
+    }
+  },
+  begin() {
+    model.duration++
+    console.log(model.duration)
+    view.renewDuration(model.duration)
+  },
+  stopCount() {
+    clearInterval(model.timer)
+    model.timer = null // 將狀態轉為空
   }
 }
 
@@ -85,9 +99,11 @@ const view = {
   showGameFinished() {
     const myModal = new bootstrap.Modal(document.querySelector('#finishedGame'))
     myModal.show()
+  },
+  renewDuration(duration) {
+    document.querySelector('.duration').innerHTML = duration
   }
 }
-
 
 const model = {
   revealedCards: [],
@@ -101,7 +117,9 @@ const model = {
     }
   },
   score: 0,
-  triedTimes: 0
+  triedTimes: 0,
+  timer: null,
+  duration: 0
 }
 
 const control = {
@@ -121,8 +139,8 @@ const control = {
         break
       case GAME_STATE.SecondCardWaits:
         model.triedTimes += 1
+        utility.startCount() //翻開第一張卡片之後開始計時
         view.renderTriedTimes(model.triedTimes)
-
         view.flipCards(card)
         model.revealedCards.push(card)
         if (model.isCardMatched()) {
@@ -133,10 +151,9 @@ const control = {
           view.renderScore(model.score)
           if (model.score === 50) {
             this.currentState = GAME_STATE.GameFinished
+            utility.stopCount() //暫停計時
             setTimeout(view.showGameFinished, 200)
-
             this.postGameRecord() //儲存這筆資料
-
           } else {
             this.currentState = GAME_STATE.FirstCardWaits
           }
@@ -176,7 +193,6 @@ const control = {
       .then(response => response.json())
       .catch(error => console.error('Unable to add record.', error))
   }
-
 }
 
 control.generateCards(10)
