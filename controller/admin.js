@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 const { raw } = require('body-parser')
 
 const adminController = {
-  HomePage: async (req, res, next) => {
+  homePage: async (req, res, next) => {
     try {
       const users = await User.findAll(
         {

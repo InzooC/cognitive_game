@@ -1,6 +1,5 @@
 const loginController = {
   adminLoginPage: (req, res, next) => {
-    // req.flash('success_messages', '輸入帳密進行登入')
     res.render('admin/admin-login')
   },
   adminLogin: (req, res, next) => {
