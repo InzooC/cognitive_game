@@ -30,7 +30,6 @@ const utility = {
   },
   begin() {
     model.duration++
-    console.log(model.duration)
     view.renewDuration(model.duration)
   },
   stopCount() {
@@ -101,7 +100,16 @@ const view = {
     myModal.show()
   },
   renewDuration(duration) {
-    document.querySelector('.duration').innerHTML = duration
+    let minute = 0
+    let second = 0
+    if (duration < 60) {
+      second += duration
+      document.querySelector('.duration').innerHTML = `${second}秒`
+    } else {
+      minute += (Math.floor(duration / 60))
+      second += (duration % 60)
+      document.querySelector('.duration').innerHTML = `${minute}分${second}秒`
+    }
   }
 }
 

@@ -68,12 +68,17 @@
   padding-left: 0.5em;
 } */
 
-#header .score {
+/* #header .score {
   margin: 0;
   color: #6c90ac;
+} */
+
+#time {
+  /* margin: 0; */
+  color: #6c966cac;
 }
 
-#header .tried {
+#header {
   margin-top: 0;
 }
 
