@@ -7,7 +7,6 @@ const Level = db.Level
 
 const gameRecordsController = {
   cardGameLevelOne: async (req, res, next) => {
-    console.log('成功到cardGameLevelOne')
     try {
           //! 是否可用關聯簡化？
       const cardGame = await Game.findOne({ where: { game_name: 'Match 10 Card Game' } })
@@ -30,7 +29,6 @@ const gameRecordsController = {
     }
   },
   cardGameLevelTwo: async (req, res, next) => {
-    console.log('成功到cardGameLevelTwo')
     try {
       const cardGame = await Game.findOne({ where: { game_name: 'Match 10 Card Game' } })
       const level = await Level.findOne({ where: { level_name: 'level2' } })

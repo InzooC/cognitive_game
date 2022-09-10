@@ -35,6 +35,18 @@ const utility = {
   stopCount() {
     clearInterval(model.timer)
     model.timer = null // 將狀態轉為空
+  },
+  transformTime(duration) {
+    let minute = 0
+    let second = 0
+    if (duration < 60) {
+      second += duration
+      return `${second}秒`
+    } else {
+      minute += (Math.floor(duration / 60))
+      second += (duration % 60)
+      return `${minute}分${second}秒`
+    }
   }
 }
 
@@ -97,19 +109,11 @@ const view = {
   },
   showGameFinished() {
     const myModal = new bootstrap.Modal(document.querySelector('#finishedGame'))
+    document.querySelector('#durationInModal').innerHTML = `使用${(utility.transformTime(model.duration))}完成卡片配對`
     myModal.show()
   },
   renewDuration(duration) {
-    let minute = 0
-    let second = 0
-    if (duration < 60) {
-      second += duration
-      document.querySelector('.duration').innerHTML = `${second}秒`
-    } else {
-      minute += (Math.floor(duration / 60))
-      second += (duration % 60)
-      document.querySelector('.duration').innerHTML = `${minute}分${second}秒`
-    }
+    document.querySelector('.duration').innerHTML = (utility.transformTime(duration))
   }
 }
 
@@ -142,12 +146,12 @@ const control = {
     switch (this.currentState) {
       case GAME_STATE.FirstCardWaits:
         view.flipCards(card)
+        utility.startCount() //翻開第一張卡片之後開始計時
         model.revealedCards.push(card)
         this.currentState = GAME_STATE.SecondCardWaits
         break
       case GAME_STATE.SecondCardWaits:
         model.triedTimes += 1
-        utility.startCount() //翻開第一張卡片之後開始計時
         view.renderTriedTimes(model.triedTimes)
         view.flipCards(card)
         model.revealedCards.push(card)

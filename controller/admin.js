@@ -84,7 +84,6 @@ const adminController = {
     try {
       const memberData = req.body
       const account = req.params.account
-      console.log('memberData.class', memberData.class)
       const member = await User.findOne({ where: { account } })
       await member.update({
         name: memberData.name || member.name,

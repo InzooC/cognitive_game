@@ -76,17 +76,14 @@
 
 
 <!-- finished game Modal -->
-{{!-- 之後要改成api 才能顯示完成時間 --}}
 <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="finishedGame" tabindex="-1"
   aria-labelledby="finishedGameLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body" style="margin: auto 0;">
-        {{#if breakRecord}}
-        <h1>恭喜您刷新自己的紀錄</h1>
-        {{/if}}
-        <h5 style="text-align: center;">使用00:00完成卡片配對</h5>
-        <h5 style="text-align: center;">恭喜獲得50點</h5>
+        {{!-- 未寫入此功能  <h1>恭喜您刷新自己的紀錄</h1> --}}
+        <h5 id="durationInModal" style="text-align: center;">使用...完成卡片配對</h5>
+        <h5 id="pointInModal" style="text-align: center;">恭喜獲得50點</h5>
       </div>
       <div class="modal-footer">
         <a href="/game/cardgame/levelone" type="button" class="btn btn-outline-primary">再玩一次</a>

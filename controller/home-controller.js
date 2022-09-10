@@ -12,7 +12,6 @@ const homeController = {
   homePage: async (req, res, next) => {
     try {
       const user = req.user
-      console.log('user', user)
       const cardGame = await Game.findOne({ where: { game_name: 'Match 10 Card Game' }, nest: true, raw: true })
       const gameLevel = await GameLevel.findAll({
         where: {
