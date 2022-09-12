@@ -9,15 +9,10 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated, authenticatedAdmin, authenticatedUser } = require('../middleware/auth')
 
 router.use('/login', login)
-
 router.use('/admin', authenticated, authenticatedAdmin, admin)
-
 router.use('/gamerecords', gameRecords)
-
 router.use('/game/cardgame', authenticated, authenticatedUser, cardGame)
-
 router.use('/home', authenticated, authenticatedUser, home)
-
 router.use('/', authenticated, authenticatedUser, (req, res) => {
   res.redirect('/home')
 })

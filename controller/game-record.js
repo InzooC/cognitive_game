@@ -8,7 +8,7 @@ const Level = db.Level
 const gameRecordsController = {
   cardGameLevelOne: async (req, res, next) => {
     try {
-          //! 是否可用關聯簡化？
+      //! 是否可用關聯簡化？
       const cardGame = await Game.findOne({ where: { game_name: 'Match 10 Card Game' } })
       const level = await Level.findOne({ where: { level_name: 'level1' } })
       const gameLevel = await GameLevel.findOne({
@@ -18,9 +18,11 @@ const gameRecordsController = {
         }
       })
       const userId = req.user.id
+      const body = req.body
       const record = await GameRecord.create({
-        point: 50, // !還沒有用fetch成功傳point進來       
         userId,
+        point: Number(body.score),
+        duration: Number(body.duration),
         gameLevelId: gameLevel.toJSON().id
       })
       console.log('成功創建level1紀錄')
@@ -39,9 +41,11 @@ const gameRecordsController = {
         }
       })
       const userId = req.user.id
+      const body = req.body
       const record = await GameRecord.create({
-        point: 150, // !還沒有用fetch成功傳point進來       
         userId,
+        point: Number(body.score),
+        duration: Number(body.duration),
         gameLevelId: gameLevel.toJSON().id
       })
       console.log('成功創建level2紀錄')

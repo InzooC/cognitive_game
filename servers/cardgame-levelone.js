@@ -183,27 +183,22 @@ const control = {
     control.currentState = GAME_STATE.FirstCardWaits
   },
   postGameRecord() {
-    const score = document.querySelector('.score').innerHTML
-    const item = {
-      score: 50,
-      userId: 18
+    let item = {
+      "score": "50",
+      "duration": `${model.duration}`
     }
-    //! 還是沒辦法成功傳 JSON，只能傳x-www-form-urlencoded....
-
-    fetch('/gamerecords/cglevelone', {
-      method: 'POST',
+    fetch("/gamerecords/cglevelone", {
       headers: {
         'Accept': 'application/json',
-        "Content-type": 'application/json;charset=utf-8'
-      }
-      // body: JSON.stringify(item)
-      // body: JSON.stringify({
-      //   name: 'oxxo',
-      //   age: 18
-      // })
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify(item)
     })
-      .then(response => response.json())
-      .catch(error => console.error('Unable to add record.', error))
+      .then((res) => res.json())
+      .then((json) => console.log(json))
+      .catch((err) => console.error("error:", err));
+
   }
 }
 
