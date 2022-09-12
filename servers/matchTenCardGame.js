@@ -14,15 +14,48 @@ const Symbols = [
 ]
 
 const utility = {
-  getRandomNumberArray(count) {
-    const array = Array.from(Array(count).keys())
+  getRandomNumberArray(level) {
+    const cardNumber = this.decideCardNumber(level)
+    const addCards = this.addCards(level)
+
+    const array = Array.from(Array(cardNumber).keys())
     const numberArray = array.map((index) => index + 1)
+    numberArray.push(...addCards)  //依據level多加牌
     for (let index = numberArray.length - 1; index > 0; index--) {
       let randomIndex = Math.floor(Math.random() * (index - 1));
       [numberArray[index], numberArray[randomIndex]] = [numberArray[randomIndex], numberArray[index]]
     }
     return numberArray
   },
+  decideCardNumber(level) {
+    switch (level) {
+      case 1:
+        return 10
+      case 2:
+        return 20
+      case 3:
+        return 30
+      case 4:
+        return 40
+    }
+  },
+  addCards(level) {
+    switch (level) {
+      case 1:
+        return []
+        break
+      case 2:
+        return [21, 22, 28, 29] //多加4張牌
+        break
+      case 3:
+        return [21, 22, 28, 29] //! 未修改
+        break
+      case 4:
+        return [21, 22, 28, 29] //! 未修改
+        break
+    }
+  }
+  ,
   startCount() {
     if (model.timer == null) { // 如果timer為空 則開啟定時器
       model.timer = setInterval(this.begin, 1000)
@@ -60,9 +93,10 @@ const view = {
     return `<div data-index="${index}" class="card back"></div>`
   },
   getCardContent(index) {
-    let number = this.transformNumber(index)
-    // let number = index
-    let symbol = Symbols[0] //先用黑桃
+    let remainder = index % 10
+    let quotient = Math.floor(index / 10)
+    let number = this.transformNumber(remainder)
+    let symbol = Symbols[quotient] //! 目前花色有變化，但需要再討論
     return `
     <p>${number}</p>
       <img src="${symbol}" alt="">
@@ -77,15 +111,15 @@ const view = {
       }
       card.classList.add('back')
       card.innerHTML = null
-
     })
   },
-  transformNumber(number) {
-    switch (number) {
-      case 10:
+  transformNumber(remainder) {
+    switch (remainder) {
+      case 0:
         return 5
+        break
       default:
-        return number
+        return remainder
     }
   },
   pairedCards(...cards) {
@@ -118,6 +152,7 @@ const view = {
 }
 
 const model = {
+  level: Number(document.querySelector('#gamelevel').dataset.level),
   revealedCards: [],
   isCardMatched() {
     if (((Number(this.revealedCards[0].dataset.index) + Number(this.revealedCards[1].dataset.index))) % 10 === 0) {
@@ -136,8 +171,8 @@ const model = {
 
 const control = {
   currentState: GAME_STATE.FirstCardWaits,
-  generateCards(cardNumber) {
-    view.displayCards(utility.getRandomNumberArray(cardNumber))
+  generateCards(level) {
+    view.displayCards(utility.getRandomNumberArray(level))
   },
   dispatchCardAction(card) {
     if (!card.classList.contains('back')) {
@@ -161,8 +196,8 @@ const control = {
           model.revealedCards = []
           model.score += 10
           view.renderScore(model.score)
-          if (model.score === 50) {
-            this.currentState = GAME_STATE.GameFinished
+          if (model.level === 1 && model.score === 50 || model.level === 2 && model.score === 120 || model.level === 3 && model.score === 50 || model.level === 4 && model.score === 120) {
+            this.currentState = GAME_STATE.GameFinished  //! 還沒設定level34過關的score
             utility.stopCount() //暫停計時
             setTimeout(view.showGameFinished, 200)
             this.postGameRecord() //儲存這筆資料
@@ -183,17 +218,33 @@ const control = {
     control.currentState = GAME_STATE.FirstCardWaits
   },
   postGameRecord() {
-    let item = {
-      "score": "50",
+    let data = {
+      "level": `${model.level}`,
+      "score": '',
       "duration": `${model.duration}`
     }
-    fetch("/gamerecords/cglevelone", {
+    switch (model.level) {
+      case 1:
+        data.score = "50"
+        break
+      case 2:
+        data.score = "150"
+        break
+      case 3:
+        data.score = "250" //!暫定，再討論
+        break
+      case 4:
+        data.score = "300" //!暫定，再討論
+        break
+    }
+
+    fetch("/gamerecords/matchTenCardGame", {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       method: "POST",
-      body: JSON.stringify(item)
+      body: JSON.stringify(data)
     })
       .then((res) => res.json())
       .then((json) => console.log(json))
@@ -202,7 +253,8 @@ const control = {
   }
 }
 
-control.generateCards(10)
+
+control.generateCards(model.level)
 
 document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('click', onCLickCard => {

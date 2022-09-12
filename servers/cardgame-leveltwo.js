@@ -91,7 +91,7 @@ const view = {
   }
 }
 
-const model = {  //! 還沒改邏輯
+const model = {
   revealedCards: [],
   isCardMatched() {
     if (((Number(this.revealedCards[0].dataset.index) + Number(this.revealedCards[1].dataset.index))) % 10 === 0) {
@@ -167,15 +167,11 @@ const control = {
     control.currentState = GAME_STATE.FirstCardWaits
   },
   postGameRecord() {
-
     const score = document.querySelector('.score').innerHTML
     const item = {
       score: 50,
       userId: 18
     }
-
-    //! 還是沒辦法成功傳 JSON，只能傳x-www-form-urlencoded....
-
     fetch('/gamerecords/cgleveltwo', {
       method: 'POST',
       headers: {

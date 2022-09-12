@@ -1,7 +1,18 @@
 <!-- header -->
 <div id="header">
   <div class="title">
-    <h2>翻牌遊戲</h2>
+    {{#if cgLevelOne}}
+    <div id="gamelevel" data-level="1" class="title">
+      <h2>翻牌遊戲: 普通關卡</h2>
+    </div>
+    {{/if}}
+
+    {{#if cgLevelTwo}}
+    <div id="gamelevel" data-level="2" class="title">
+      <h2>翻牌遊戲: 中等關卡</h2>
+    </div>
+    {{/if}}
+
   </div>
   <h4>遊戲規則：請將加總為10的卡片做配對翻開</h4>
   <h5 class="score">總得分: 0</h5>
@@ -68,11 +79,19 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        {{#if cgLevelOne}}
         <a href="/game/cardgame/levelone" type="button" class="btn btn-primary">確定</a>
+        {{/if}}
+        {{#if cgLevelTwo}}
+        <a href="/game/cardgame/leveltwo" type="button" class="btn btn-primary">確定</a>
+        {{/if}}
       </div>
     </div>
   </div>
 </div>
+
+
+
 
 
 <!-- finished game Modal -->
@@ -81,16 +100,22 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body" style="margin: auto 0;">
-        {{!-- 未寫入此功能  <h1>恭喜您刷新自己的紀錄</h1> --}}
+        {{!-- 未寫入此功能 <h1>恭喜您刷新自己的紀錄</h1> --}}
         <h5 id="durationInModal" style="text-align: center;">使用...完成卡片配對</h5>
-        <h5 id="pointInModal" style="text-align: center;">恭喜獲得50點</h5>
+        <h5 id="pointInModal" style="text-align: center;">恭喜獲得{{#if cgLevelOne}}50{{/if}} {{#if cgLevelTwo}}150{{/if}}點</h5>
       </div>
       <div class="modal-footer">
+        {{#if cgLevelOne}}
         <a href="/game/cardgame/levelone" type="button" class="btn btn-outline-primary">再玩一次</a>
+        {{/if}}
+        {{#if cgLevelTwo}}
+        <a href="/game/cardgame/leveltwo" type="button" class="btn btn-outline-primary">再玩一次</a>
+        {{/if}}
         <a href="/" type="button" class="btn btn-primary">返回遊戲大廳</a>
       </div>
     </div>
   </div>
 </div>
 
-<script src="/servers/cardgame-levelone.js"></script>
+
+<script src="/servers/matchTenCardGame.js"></script>
