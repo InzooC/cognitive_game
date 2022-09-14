@@ -8,8 +8,6 @@
 </nav>
 
 <div class="row">
-
-
   <div class="col-3" style="display: flex; justify-content: start; align-items: center; flex-direction: column;">
     <div class="mb-4 mt-3">
       <h4>開始遊戲</h4>
@@ -36,12 +34,10 @@
   </div>
 
   <div class="col-8">
-
     <div class="col-8" style="height: 100px;">
       <h3>卡片配對遊戲規則：</h3>
       <h5>請將數字相加等於10的兩張牌作配對。</h5>
     </div>
-
 
     <div>
       <h5>遊戲紀錄</h5>
@@ -52,7 +48,7 @@
             <th scope="col">成功挑戰次數</th>
             <th scope="col">累積點數</th>
             <th scope="col">最快完成時間</th>
-            <th scope="col">最近一次遊玩時間</th>
+            <th scope="col">最近一次挑戰的時間</th>
           </tr>
         </thead>
         <tbody>
@@ -61,41 +57,38 @@
             <td>{{#if data.levelOne}} {{data.levelOne.trail}} {{else}} 0 {{/if}}</td>
             <td>{{#if data.levelOne}} {{data.levelOne.pointCount}} {{else}} 0 {{/if}}</td>
             <td>{{#if data.levelOne}} {{data.levelOne.transformedTime}} {{else}} 0 {{/if}}</td>
-            <td>{{#if data.levelOne}} {{data.levelOne.recent}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelOne}} {{data.levelOne.lastTime}} {{else}} 0 {{/if}}</td>
           </tr>
           <tr>
             <th scope="row">中等關卡</th>
             <td>{{#if data.levelTwo}} {{data.levelTwo.trail}} {{else}} 0 {{/if}}</td>
             <td>{{#if data.levelTwo}} {{data.levelTwo.pointCount}} {{else}} 0 {{/if}}</td>
             <td>{{#if data.levelTwo}} {{data.levelTwo.transformedTime}} {{else}} 0 {{/if}}</td>
-            <td>{{#if data.levelTwo}} {{data.levelTwo.recent}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelTwo}} {{data.levelTwo.lastTime}} {{else}} 0 {{/if}}</td>
           </tr>
           <tr>
             <th scope="row">高等關卡</th>
             <td>{{#if data.levelThree}} {{data.levelThree.trail}} {{else}} 0 {{/if}}</td>
             <td>{{#if data.levelThree}} {{data.levelThree.pointCount}} {{else}} 0 {{/if}}</td>
             <td>{{#if data.levelThree}} {{data.levelThree.transformedTime}} {{else}} 0 {{/if}}</td>
-            <td>{{#if data.levelThree}} {{data.levelThree.recent}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelThree}} {{data.levelThree.lastTime}} {{else}} 0 {{/if}}</td>
           </tr>
           <tr>
             <th scope="row">挑戰關卡</th>
             <td>{{#if data.levelFour}} {{data.levelFour.trail}} {{else}} 0 {{/if}}</td>
             <td>{{#if data.levelFour}} {{data.levelFour.pointCount}} {{else}} 0 {{/if}}</td>
             <td>{{#if data.levelFour}} {{data.levelFour.transformedTime}} {{else}} 0 {{/if}}</td>
-            <td>{{#if data.levelFour}} {{data.levelFour.recent}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelFour}} {{data.levelFour.lastTime}} {{else}} 0 {{/if}}</td>
           </tr>
         <tfoot>
           <th scope="row">全部關卡</th>
           <td>{{#if data.total}} {{data.total.trail}} {{else}} 0 {{/if}}</td>
           <td>{{#if data.total}} {{data.total.pointCount}} {{else}} 0 {{/if}}</td>
-          <td></td>
-          <td>{{#if data.total}} {{data.total.recent}} {{else}} 0 {{/if}}</td>
+          <td>-</td>
+          <td>{{#if data.total}} {{data.total.lastTime}} {{else}} 0 {{/if}}</td>
         </tfoot>
-
         </tbody>
       </table>
-
     </div>
-
   </div>
 </div>
