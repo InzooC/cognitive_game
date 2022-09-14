@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const usersId = await queryInterface.sequelize.query(`SELECT id FROM Users WHERE role = 'user'`, { type: queryInterface.sequelize.QueryTypes.SELECT })
@@ -10,7 +8,7 @@ module.exports = {
     await usersId.forEach(user => {
       for (let i = 0; i < 10; i++) {
         recordList.push({
-          duration: 123,
+          duration: 300,
           point: 123,
           user_id: user.id,
           game_level_id: gameLevelId[Math.floor(Math.random() * gameLevelId.length)].id,

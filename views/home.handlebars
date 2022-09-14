@@ -59,37 +59,37 @@
           <tr>
             <th scope="row">普通關卡</th>
             <td>{{#if data.levelOne}} {{data.levelOne.trail}} {{else}} 0 {{/if}}</td>
-            <td>{{data.levelOne.pointCount}}</td>
-            <td>@資料維修中</td>
-            <td>@資料維修中</td>
+            <td>{{#if data.levelOne}} {{data.levelOne.pointCount}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelOne}} {{data.levelOne.transformedTime}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelOne}} {{data.levelOne.recent}} {{else}} 0 {{/if}}</td>
           </tr>
           <tr>
             <th scope="row">中等關卡</th>
-            <td>{{data.levelTwo.trail}}</td>
-            <td>{{data.levelTwo.pointCount}}</td>
-            <td>@資料維修中</td>
-            <td>@資料維修中</td>
+            <td>{{#if data.levelTwo}} {{data.levelTwo.trail}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelTwo}} {{data.levelTwo.pointCount}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelTwo}} {{data.levelTwo.transformedTime}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelTwo}} {{data.levelTwo.recent}} {{else}} 0 {{/if}}</td>
           </tr>
           <tr>
             <th scope="row">高等關卡</th>
-            <td>{{data.levelThree.trail}}</td>
-            <td>{{data.levelThree.pointCount}}</td>
-            <td>@資料維修中</td>
-            <td>@資料維修中</td>
+            <td>{{#if data.levelThree}} {{data.levelThree.trail}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelThree}} {{data.levelThree.pointCount}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelThree}} {{data.levelThree.transformedTime}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelThree}} {{data.levelThree.recent}} {{else}} 0 {{/if}}</td>
           </tr>
           <tr>
             <th scope="row">挑戰關卡</th>
-            <td>{{data.levelFour.trail}}</td>
-            <td>{{data.levelFour.pointCount}}</td>
-            <td>@資料維修中</td>
-            <td>@資料維修中</td>
+            <td>{{#if data.levelFour}} {{data.levelFour.trail}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelFour}} {{data.levelFour.pointCount}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelFour}} {{data.levelFour.transformedTime}} {{else}} 0 {{/if}}</td>
+            <td>{{#if data.levelFour}} {{data.levelFour.recent}} {{else}} 0 {{/if}}</td>
           </tr>
         <tfoot>
           <th scope="row">全部關卡</th>
-          <td>{{data.total.trail}}</td>
-          <td>{{data.total.pointCount}}</td>
-          <td>@資料維修中</td>
-          <td>@資料維修中</td>
+          <td>{{#if data.total}} {{data.total.trail}} {{else}} 0 {{/if}}</td>
+          <td>{{#if data.total}} {{data.total.pointCount}} {{else}} 0 {{/if}}</td>
+          <td></td>
+          <td>{{#if data.total}} {{data.total.recent}} {{else}} 0 {{/if}}</td>
         </tfoot>
 
         </tbody>

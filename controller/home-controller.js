@@ -1,8 +1,5 @@
-// const express = require('express')
-// const router = express.Router()
 const { Op } = require("sequelize")
 const db = require('../models')
-// const User = db.User
 const GameRecord = db.GameRecord
 const GameLevel = db.GameLevel
 const Level = db.Level
@@ -28,11 +25,10 @@ const homeController = {
             [Op.or]: gameLevelIdArr
           }
         },
-        attributes: ['id', 'point', 'userId', 'gameLevelId', 'createdAt'],
+        attributes: ['id', 'duration', 'point', 'userId', 'gameLevelId', 'createdAt'],
         nest: true,
         raw: true
       })
-
       const data = await outputData(cardGameRecords)
       res.render('home', { data, member: user })
     } catch (err) {
@@ -47,26 +43,36 @@ async function outputData(data) {
   const levelTwoId = (await Level.findOne({ where: { level_name: 'level2' }, nest: true, raw: true })).id
   const levelThreeId = (await Level.findOne({ where: { level_name: 'level3' }, nest: true, raw: true })).id
   const levelFourId = (await Level.findOne({ where: { level_name: 'level4' }, nest: true, raw: true })).id
+  const defaultDuration = 3600
   const outPut = {
     levelOne: {
       trail: 0,
-      pointCount: 0
+      pointCount: 0,
+      duration: defaultDuration,
+      recent: '製作中'
     },
     levelTwo: {
       trail: 0,
-      pointCount: 0
+      pointCount: 0,
+      duration: defaultDuration,
+      recent: '製作中'
     },
     levelThree: {
       trail: 0,
-      pointCount: 0
+      pointCount: 0,
+      duration: defaultDuration,
+      recent: '製作中'
     },
     levelFour: {
       trail: 0,
-      pointCount: 0
+      pointCount: 0,
+      duration: defaultDuration,
+      recent: '製作中'
     },
     total: {
       trail: 0,
-      pointCount: 0
+      pointCount: 0,
+      recent: '製作中'
     }
   }
   data.forEach(e => {
@@ -74,26 +80,76 @@ async function outputData(data) {
       case levelOneId:
         outPut.levelOne.trail += 1
         outPut.levelOne.pointCount += Number(e.point)
+        if (Number(e.duration) < outPut.levelOne.duration) {
+          outPut.levelOne.duration = Number(e.duration)
+        }
         break
       case levelTwoId:
         outPut.levelTwo.trail += 1
         outPut.levelTwo.pointCount += Number(e.point)
+        if (Number(e.duration) < outPut.levelTwo.duration) {
+          outPut.levelTwo.duration = Number(e.duration)
+        }
         break
       case levelThreeId:
         outPut.levelThree.trail += 1
         outPut.levelThree.pointCount += Number(e.point)
+        if (Number(e.duration) < outPut.levelThree.duration) {
+          outPut.levelThree.duration = Number(e.duration)
+        }
         break
       case levelFourId:
         outPut.levelFour.trail += 1
         outPut.levelFour.pointCount += Number(e.point)
+        if (Number(e.duration) < outPut.levelFour.duration) {
+          outPut.levelFour.duration = Number(e.duration)
+        }
         break
     }
   })
   //! 可以再優化
   outPut.total.trail = (outPut.levelOne.trail + outPut.levelTwo.trail + outPut.levelThree.trail + outPut.levelFour.trail)
   outPut.total.pointCount = (outPut.levelOne.pointCount + outPut.levelTwo.pointCount + outPut.levelThree.pointCount + outPut.levelFour.pointCount)
+
+  //! 因為在forEach內無法使用async函式
+  //! 所以在最後新增transformedTime資料
+  if (outPut.levelOne.trail > 0) {
+    outPut.levelOne.transformedTime = await utility.transformTime(outPut.levelOne.duration)
+  } else {
+    outPut.levelOne.transformedTime = '尚未挑戰'
+  }
+  if (outPut.levelTwo.trail > 0) {
+    outPut.levelTwo.transformedTime = await utility.transformTime(outPut.levelTwo.duration)
+  } else {
+    outPut.levelTwo.transformedTime = '尚未挑戰'
+  }
+  if (outPut.levelThree.trail > 0) {
+    outPut.levelThree.transformedTime = await utility.transformTime(outPut.levelThree.duration)
+  } else {
+    outPut.levelThree.transformedTime = '尚未挑戰'
+  }
+  if (outPut.levelFour.trail > 0) {
+    outPut.levelFour.transformedTime = await utility.transformTime(outPut.levelFour.duration)
+  } else {
+    outPut.levelFour.transformedTime = '尚未挑戰'
+  }
+
   return outPut
 }
 
+const utility = {
+  async transformTime(duration) {
+    let minute = 0
+    let second = 0
+    if (duration < 60) {
+      second += duration
+      return `${second}秒`
+    } else {
+      minute += (Math.floor(duration / 60))
+      second += (duration % 60)
+      return `${minute}分${second}秒`
+    }
+  }
+}
 
 module.exports = homeController

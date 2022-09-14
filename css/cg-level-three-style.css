@@ -1,7 +1,7 @@
 #cards {
   display: flex;
   flex-wrap: wrap;
-  width: 95%;
+  width: 90%;
   /* 新增：寬度和標頭一致 */
   margin: 0 auto;
   /* 新增：置中 */
@@ -9,7 +9,7 @@
 
 .card {
   box-sizing: border-box;
-  flex: 7%;
+  flex: 7.5%;
   /* 每個 item 分配容器寬度 */
   height: 10vw;
   /* 依視窗的寬度等比例變化 */
