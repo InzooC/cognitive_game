@@ -1,18 +1,13 @@
 const cardGameController = {
-  getlevelOne: async (req, res, next) => {
+  getCardGame: async (req, res, next) => {
     try {
+      const cardGameLevel = Number(req.params.level)
+      console.log('cardGameLevel', cardGameLevel)
+      if (![1, 2, 3, 4].includes(cardGameLevel)) {
+        res.redirect('/')
+      }
       const user = req.user
-      const cgLevelOne = true
-      res.render('matchTenCardGame', { user, cgLevelOne })
-    } catch (err) {
-      next(err)
-    }
-  },
-  getlevelTwo: async (req, res, next) => {
-    try {
-      const user = req.user
-      const cgLevelTwo = true
-      res.render('matchTenCardGame', { user, cgLevelTwo })
+      res.render('matchTenCardGame', { user, cardGameLevel })
     } catch (err) {
       next(err)
     }

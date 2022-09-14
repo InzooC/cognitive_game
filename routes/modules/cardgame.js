@@ -2,8 +2,7 @@ const express = require('express')
 const router = express.Router()
 const cardGameController = require('../../controller/cardgame')
 
-router.get('/levelone', cardGameController.getlevelOne)
-router.get('/leveltwo', cardGameController.getlevelTwo)
+router.get('/:level', cardGameController.getCardGame)
 
 
 module.exports = router

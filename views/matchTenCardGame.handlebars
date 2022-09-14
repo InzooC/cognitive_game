@@ -1,17 +1,29 @@
 <!-- header -->
 <div id="header">
   <div class="title">
-    {{#if cgLevelOne}}
+    {{#ifCond cardGameLevel 1}}
     <div id="gamelevel" data-level="1" class="title">
       <h2>翻牌遊戲: 普通關卡</h2>
     </div>
-    {{/if}}
+    {{/ifCond}}
 
-    {{#if cgLevelTwo}}
+    {{#ifCond cardGameLevel 2}}
     <div id="gamelevel" data-level="2" class="title">
       <h2>翻牌遊戲: 中等關卡</h2>
     </div>
-    {{/if}}
+    {{/ifCond}}
+
+    {{#ifCond cardGameLevel 3}}
+    <div id="gamelevel" data-level="3" class="title">
+      <h2>翻牌遊戲: 高等關卡</h2>
+    </div>
+    {{/ifCond}}
+
+    {{#ifCond cardGameLevel 4}}
+    <div id="gamelevel" data-level="4" class="title">
+      <h2>翻牌遊戲: 挑戰關卡</h2>
+    </div>
+    {{/ifCond}}
 
   </div>
   <h4>遊戲規則：請將加總為10的卡片做配對翻開</h4>
@@ -33,7 +45,7 @@
 <!-- cards -->
 <div class="mb-2" id="cards">
   <div class="card">
-    <p>5</p>
+    <p>5</p>遊戲故障整修中
     <img src="https://img.icons8.com/ios-filled/50/000000/diamond--v1.png">
     <p>5</p>
   </div>
@@ -79,20 +91,30 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-        {{#if cgLevelOne}}
-        <a href="/game/cardgame/levelone" type="button" class="btn btn-primary">確定</a>
-        {{/if}}
-        {{#if cgLevelTwo}}
-        <a href="/game/cardgame/leveltwo" type="button" class="btn btn-primary">確定</a>
-        {{/if}}
+        {{#ifCond cardGameLevel 1}}
+        <a href="/game/cardgame/1" type="button" class="btn btn-primary">確定</a>
+        {{/ifCond}}
+        {{#ifCond cardGameLevel 2}}
+        <a href="/game/cardgame/2" type="button" class="btn btn-primary">確定</a>
+        {{/ifCond}}
+        {{#ifCond cardGameLevel 3}}
+        <a href="/game/cardgame/3" type="button" class="btn btn-primary">確定</a>
+        {{/ifCond}}
+        {{#ifCond cardGameLevel 4}}
+        <a href="/game/cardgame/4" type="button" class="btn btn-primary">確定</a>
+        {{/ifCond}}
       </div>
     </div>
   </div>
 </div>
-
-
-
-
+{{#ifCond cardGameLevel 1}}
+{{/ifCond}}
+{{#ifCond cardGameLevel 2}}
+{{/ifCond}}
+{{#ifCond cardGameLevel 3}}
+{{/ifCond}}
+{{#ifCond cardGameLevel 4}}
+{{/ifCond}}
 
 <!-- finished game Modal -->
 <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="finishedGame" tabindex="-1"
@@ -101,16 +123,48 @@
     <div class="modal-content">
       <div class="modal-body" style="margin: auto 0;">
         {{!-- 未寫入此功能 <h1>恭喜您刷新自己的紀錄</h1> --}}
+        {{#ifCond cardGameLevel 1}}
+        <h2 style="text-align: center;">恭喜完成 普通關卡</h2>
+        {{/ifCond}}
+        {{#ifCond cardGameLevel 2}}
+        <h2 style="text-align: center;">恭喜完成 中等關卡</h2>
+        {{/ifCond}}
+        {{#ifCond cardGameLevel 3}}
+        <h2 style="text-align: center;">恭喜完成 高等關卡</h2>
+        {{/ifCond}}
+        {{#ifCond cardGameLevel 4}}
+        <h2 style="text-align: center;">恭喜完成 挑戰關卡</h2>
+        {{/ifCond}}
+
         <h5 id="durationInModal" style="text-align: center;">使用...完成卡片配對</h5>
-        <h5 id="pointInModal" style="text-align: center;">恭喜獲得{{#if cgLevelOne}}50{{/if}} {{#if cgLevelTwo}}150{{/if}}點</h5>
+        <h5 id="pointInModal" style="text-align: center;">獲得
+          {{#ifCond cardGameLevel 1}}50
+          {{/ifCond}}
+          {{#ifCond cardGameLevel 2}}150
+          {{/ifCond}}
+          {{#ifCond cardGameLevel 3}}250
+          {{/ifCond}}
+          {{#ifCond cardGameLevel 4}}350
+          {{/ifCond}}點
+        </h5>
       </div>
       <div class="modal-footer">
-        {{#if cgLevelOne}}
-        <a href="/game/cardgame/levelone" type="button" class="btn btn-outline-primary">再玩一次</a>
-        {{/if}}
-        {{#if cgLevelTwo}}
-        <a href="/game/cardgame/leveltwo" type="button" class="btn btn-outline-primary">再玩一次</a>
-        {{/if}}
+        {{#ifCond cardGameLevel 1}}
+        <a href="/game/cardgame/1" type="button" class="btn btn-outline-primary">再玩一次</a>
+        {{/ifCond}}
+
+        {{#ifCond cardGameLevel 2}}
+        <a href="/game/cardgame/2" type="button" class="btn btn-outline-primary">再玩一次</a>
+        {{/ifCond}}
+
+        {{#ifCond cardGameLevel 3}}
+        <a href="/game/cardgame/3" type="button" class="btn btn-outline-primary">再玩一次</a>
+        {{/ifCond}}
+
+        {{#ifCond cardGameLevel 4}}
+        <a href="/game/cardgame/4" type="button" class="btn btn-outline-primary">再玩一次</a>
+        {{/ifCond}}
+
         <a href="/" type="button" class="btn btn-primary">返回遊戲大廳</a>
       </div>
     </div>

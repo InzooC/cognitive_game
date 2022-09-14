@@ -10,7 +10,8 @@ const Symbols = [
   'https://img.icons8.com/ios-glyphs/30/000000/spades--v1.png', // 黑桃
   'https://img.icons8.com/ios-filled/50/000000/like--v1.png', // 愛心
   'https://img.icons8.com/ios-filled/50/000000/diamond--v1.png', // 方塊
-  'https://img.icons8.com/external-bearicons-glyph-bearicons/64/000000/external-club-graphic-design-bearicons-glyph-bearicons.png' // 梅花
+  'https://img.icons8.com/external-bearicons-glyph-bearicons/64/000000/external-club-graphic-design-bearicons-glyph-bearicons.png', // 梅花
+  'https://img.icons8.com/external-bearicons-glyph-bearicons/64/000000/external-club-graphic-design-bearicons-glyph-bearicons.png', // !先用梅花，之後找別的換
 ]
 
 const utility = {
@@ -48,10 +49,10 @@ const utility = {
         return [21, 22, 28, 29] //多加4張牌
         break
       case 3:
-        return [21, 22, 28, 29] //! 未修改
+        return []
         break
       case 4:
-        return [21, 22, 28, 29] //! 未修改
+        return []
         break
     }
   }
@@ -196,8 +197,8 @@ const control = {
           model.revealedCards = []
           model.score += 10
           view.renderScore(model.score)
-          if (model.level === 1 && model.score === 50 || model.level === 2 && model.score === 120 || model.level === 3 && model.score === 50 || model.level === 4 && model.score === 120) {
-            this.currentState = GAME_STATE.GameFinished  //! 還沒設定level34過關的score
+          if (model.level === 1 && model.score === 50 || model.level === 2 && model.score === 120 || model.level === 3 && model.score === 150 || model.level === 4 && model.score === 200) {
+            this.currentState = GAME_STATE.GameFinished
             utility.stopCount() //暫停計時
             setTimeout(view.showGameFinished, 200)
             this.postGameRecord() //儲存這筆資料
@@ -231,7 +232,7 @@ const control = {
         data.score = "150"
         break
       case 3:
-        data.score = "250" //!暫定，再討論
+        data.score = "200" //!暫定，再討論
         break
       case 4:
         data.score = "300" //!暫定，再討論
