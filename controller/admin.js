@@ -31,6 +31,9 @@ const adminController = {
   addMember: async (req, res, next) => {
     try {
       const newMember = req.body
+      if ((newMember.name).trim().length === 0) {
+        throw new Error('姓名無法為空白')
+      }
       const accounts = await User.findAll({
         where: { role: { [Op.not]: 'admin' } },
         attributes: ['account'],

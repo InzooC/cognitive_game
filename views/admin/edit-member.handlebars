@@ -23,7 +23,7 @@
 
       <div class="mb-3">
         <label for="name" class="form-label">姓名</label>
-        <input type="text" class="form-control" id="name" name="name" value="{{member.name}}">
+        <input type="text" class="form-control" id="name" name="name" value="{{member.name}}" required>
       </div>
 
       <div class="mb-3">
@@ -65,7 +65,7 @@
 
       <div class="mb-4">
         <label for="class" class="form-label">班別</label>
-        <select class="form-select" aria-label="class" id="class" name="class">
+        <select class="form-select" aria-label="class" id="class" name="class" required>
           <option value="{{member.classId}}" selected>{{className}}</option>
           {{#each classes}}
           <option value="{{this.id}}">{{this.name}}</option>
