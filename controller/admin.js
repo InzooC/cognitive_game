@@ -3,7 +3,9 @@ const User = db.User
 const Class = db.Class
 const { Op } = require('sequelize')
 const bcrypt = require('bcrypt')
-const { raw } = require('body-parser')
+// const { raw } = require('body-parser')
+const dayjs = require('dayjs')
+const { sequelize } = require('../models')
 
 const adminController = {
   homePage: async (req, res, next) => {
@@ -11,12 +13,29 @@ const adminController = {
       const users = await User.findAll(
         {
           where: { role: { [Op.not]: 'admin' } },
-          attributes: { exclude: 'password' },
+          attributes: {
+            exclude: 'password',
+            include: [
+              [sequelize.literal(`(
+                SELECT MAX(createdAt)
+                FROM GameRecords
+                WHERE
+                    GameRecords.user_id = User.id
+              )`),
+                'lastTime'
+              ]
+            ]
+          },
           include: [Class],
           raw: true,
           nest: true,
           order: [['classId', 'ASC'], ['account', 'ASC']]
         })
+
+      users.forEach(user => {
+        user.lastTime = user.lastTime ? dayjs(user.lastTime).format('YYYY/MM/DD aHH:mm') : null
+      })
+      console.log('users', users)
       res.render('admin/admin-home', { users })
     } catch (err) { next(err) }
   },
@@ -25,8 +44,6 @@ const adminController = {
       const classes = await Class.findAll({ raw: true, nest: true })
       res.render('admin/add-member', { classes })
     } catch (err) { next(err) }
-
-
   },
   addMember: async (req, res, next) => {
     try {
