@@ -10,7 +10,8 @@ const { authenticated, authenticatedAdmin, authenticatedUser } = require('../mid
 
 router.use('/login', login)
 router.use('/admin', authenticated, authenticatedAdmin, admin)
-router.use('/gamerecords', gameRecords)
+// router.use('/admin', admin) //!把驗證拿掉來測試fetch
+router.use('/gamerecords', authenticated, authenticatedUser, gameRecords)
 router.use('/game/cardgame', authenticated, authenticatedUser, cardGame)
 router.use('/home', authenticated, authenticatedUser, home)
 router.use('/', authenticated, authenticatedUser, (req, res) => {

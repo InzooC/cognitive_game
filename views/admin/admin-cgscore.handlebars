@@ -1,0 +1,15 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+  integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<h1 id="title" style="margin-bottom: 50px;" data-id={{user.id}}>{{user.name}}的卡片配對成績頁面</h1>
+
+
+<div class="mb-2" id="chart-container" style="width: 60%; hight:300px;">
+  <canvas id="myChart"></canvas>
+</div>
+
+
+{{!-- 因爲要操作畫布，所以在這邊載入操作畫布的script --}}
+<script src="/servers/showCardGameScore.js"></script>

@@ -1,8 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const GameRecord = sequelize.define('GameRecord', {
-    duration: DataTypes.STRING,
-    point: DataTypes.STRING,
+    duration: DataTypes.INTEGER,
+    point: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     gameLevelId: DataTypes.INTEGER
   }, {

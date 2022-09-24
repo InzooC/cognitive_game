@@ -248,7 +248,7 @@ const control = {
       body: JSON.stringify(data)
     })
       .then((res) => res.json())
-      .then((json) => console.log(json))
+      .then((json) => console.log('json', json.data))
       .catch((err) => console.error("error:", err));
 
   }

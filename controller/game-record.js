@@ -10,7 +10,6 @@ const gameRecordsController = {
       const userId = req.user.id
       const body = req.body
       const level = 'level' + body.level
-      console.log('level', level)
       //! 是否可用關聯簡化？
       const cardGame = await Game.findOne({ where: { game_name: 'Match 10 Card Game' } })
       const levelId = await Level.findOne({ where: { level_name: level } })
@@ -31,7 +30,6 @@ const gameRecordsController = {
       next(err)
     }
   }
-
 }
 
 module.exports = gameRecordsController

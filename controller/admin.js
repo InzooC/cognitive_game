@@ -3,7 +3,6 @@ const User = db.User
 const Class = db.Class
 const { Op } = require('sequelize')
 const bcrypt = require('bcrypt')
-// const { raw } = require('body-parser')
 const dayjs = require('dayjs')
 const { sequelize } = require('../models')
 
@@ -31,11 +30,9 @@ const adminController = {
           nest: true,
           order: [['classId', 'ASC'], ['account', 'ASC']]
         })
-
       users.forEach(user => {
         user.lastTime = user.lastTime ? dayjs(user.lastTime).format('YYYY/MM/DD aHH:mm') : null
       })
-      console.log('users', users)
       res.render('admin/admin-home', { users })
     } catch (err) { next(err) }
   },
