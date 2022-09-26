@@ -3,13 +3,15 @@ const SHOW_LEVEL = {
   levelTwo: 'levelTwo',
   levelThree: 'levelThree',
   levelFour: 'levelFour',
-  totalLvel: 'totalLvel'
+  totalLvel: 'totalLevel'
 }
 
 const view = {
-  showChart() {
+  showChart(level) {
     let canvas = document.querySelector('#myChart')
     let ctx = canvas.getContext("2d")
+    console.log(' model.levelOneData', model.levelOneData)
+
     const myChart = new Chart(ctx, {
       type: 'line',
       data: model.levelOneData,
@@ -18,7 +20,7 @@ const view = {
         plugins: {
           title: {
             display: true,
-            text: 'level 1 成績',
+            text: `${level}`,
             font: {
               size: 20
             }
@@ -43,6 +45,27 @@ const view = {
 const control = {
   currentState: SHOW_LEVEL.levelOne,
   switchLevel() {
+  },
+  async getScoreData() { //!fetch 資料回來 目前撈７天levelOne的
+    try {
+      const title = document.querySelector('#title')
+      const userId = Number(title.dataset.id)
+      let response = await fetch(`/admin//api/cgScore/${userId}`)
+      let data = await response.json()
+      await this.pushData(data.data)
+      //render view
+      await view.showChart(this.currentState)
+    } catch (err) {
+      console.log(`Error: ${err}`)
+    }
+  },
+  async pushData(data) {
+    //把data放進要顯示的model中
+    data.forEach(e => {
+      model.levelOneData.datasets[0].data.push({
+        x: e.createdAt, y: e.duration
+      })
+    })
   }
 }
 
@@ -54,27 +77,9 @@ const model = {
       backgroundColor: "#ea464d",
       borderColor: "#ea464d",
       borderWidth: 3, //外框寬度
-      data: [
-        { x: '2016-12-25', y: 20 },
-        { x: '2016-12-26', y: 23 },
-        { x: '2016-12-28', y: 26 },
-        { x: '2016-12-29', y: 21 },]
+      data: []
     }]
-  },
-}
-
-view.showChart()
-
-const title = document.querySelector('#title')
-const userId = Number(title.dataset.id)
-
-async function getScoreData() {
-  try {
-    let response = await fetch('/admin//api/cgScore/:userId')
-    let data = await response.json()
-    console.log('data', data)
-  } catch (err) {
-    console.log(`Error: ${err}`)
   }
 }
-getScoreData()
+
+control.getScoreData()
