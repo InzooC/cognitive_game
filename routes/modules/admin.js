@@ -12,7 +12,7 @@ router.get('/edit/:account', adminController.editMemberPage)
 router.put('/edit/:account', adminController.editMember)
 
 
-router.get('/api/cgScore/:userId', cardGameScoreController.getCgLevelOneData)
+router.get('/api/cgScore/:userId', cardGameScoreController.getCgData)
 
 router.get('/cgScore/:userId', cardGameScoreController.getCgScorePage)
 
