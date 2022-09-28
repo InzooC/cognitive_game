@@ -9,19 +9,45 @@
   </div>
 </nav>
 
-<div class="container-fluid  row mb-2 col-6">
-  <label for="range" class="col-sm-3 col-form-label col-form-label-lg">時間範圍</label>
-  <div class="col-sm-6" style=" display: flex; align-items: center;">
-    <select id="range" class="form-select" aria-label="Default select example">
-      <option selected value="1">近７天</option>
-      <option value="2">近2週</option>
-      <option value="3">近1個月</option>
-      <option value="4">全部</option>
-    </select>
-  </div>
-</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid mb-3 col-10">
+    <div class="row col-7">
+      <label for="range" class="col-sm-3 col-form-label col-form-label-lg">時間範圍</label>
+      <div class="col-sm-6" style=" display: flex; align-items: center;">
+        <select id="range" class="form-select" aria-label="Default select example">
+          <option selected value="1">近７天</option>
+          <option value="2">近2週</option>
+          <option value="3">近1個月</option>
+          <option value="4">全部</option>
+        </select>
+      </div>
+    </div>
 
-<div class="mb-2" id="chart-container" style="width: 85%; hight:400px; margin:auto">
+    <div>
+
+      <ul class="nav nav-tabs justify-content-end">
+        <li class="nav-item">
+          <a class="nav-link disabled">等級</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active level-btn" data-level="level1" id="level1">簡單</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link level-btn" data-level="level2" id="level2">中等</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link level-btn" data-level="level3" id="level3">困難</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link level-btn" data-level="level4" id="level4">挑戰</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div id="chart-container" style="width: 85%; hight:400px; margin:auto">
   <canvas id="myChart"></canvas>
 </div>
 
