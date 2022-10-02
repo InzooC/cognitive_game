@@ -29,13 +29,14 @@ const view = {
         plugins: {
           title: {
             display: true,
-            text: `${level},目前還沒設定好改title`,
+            // 圖表title在這邊改
+            text: '當日最佳成績',
             font: {
-              size: 20
+              size: 25
             }
           },
           legend: { //是否要顯示圖示標籤
-            display: true,
+            display: false,
             position: 'right',
             labels: {
               fontColor: '#000'
@@ -48,6 +49,10 @@ const view = {
         }
       }
     })
+  },
+  async switchLevelBnt(level) {
+    model.levelBtns.forEach(e => e.classList.remove('active'))
+    document.querySelector(`#${level}`).classList.add('active')
   }
 }
 
@@ -59,18 +64,21 @@ const control = {
     switch (level) {
       case 'level1':
         this.currentLevel = SHOW_LEVEL.levelOne
+        view.switchLevelBnt(level)
         break
       case 'level2':
         this.currentLevel = SHOW_LEVEL.levelTwo
+        view.switchLevelBnt(level)
         break
       case 'level3':
         this.currentLevel = SHOW_LEVEL.levelThree
+        view.switchLevelBnt(level)
         break
       case 'level4':
         this.currentLevel = SHOW_LEVEL.levelFour
+        view.switchLevelBnt(level)
         break
     }
-    console.log('成功點選level:', level)
     this.getScoreData()
   },
   async setRange() {
@@ -89,12 +97,10 @@ const control = {
         this.currentRange = SHOW_RANGE.total
         break
     }
-    console.log('成功抓到改變的range,編號：', switchRange)
     this.getScoreData()
   },
   async getScoreData() { // 依據controller 裡面的設定進行 fetch 
     try {
-      console.log('成功進入getScoreData()')
       const title = document.querySelector('#title')
       const userId = Number(title.dataset.id)
       let response = await fetch(`/admin//api/cgScore/${userId}?range=${this.currentRange}&level=${this.currentLevel}`)
@@ -146,11 +152,8 @@ const model = {
 control.getScoreData()
 
 model.range.addEventListener('change', (event) => {
-  console.log('改變')
   control.setRange()
 })
-
-// const levelBtns = document.querySelectorAll('.level-btn')
 
 model.levelBtns.forEach(levelBtn => {
   levelBtn.addEventListener('click', onCLickLevel => {
