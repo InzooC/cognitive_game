@@ -55,7 +55,23 @@ const control = {
   currentLevel: SHOW_LEVEL.levelOne,
   currentRange: SHOW_RANGE.seven,
   myChart,
-  switchLevel() {
+  switchLevel(level) {
+    switch (level) {
+      case 'level1':
+        this.currentLevel = SHOW_LEVEL.levelOne
+        break
+      case 'level2':
+        this.currentLevel = SHOW_LEVEL.levelTwo
+        break
+      case 'level3':
+        this.currentLevel = SHOW_LEVEL.levelThree
+        break
+      case 'level4':
+        this.currentLevel = SHOW_LEVEL.levelFour
+        break
+    }
+    console.log('成功點選level:', level)
+    this.getScoreData()
   },
   async setRange() {
     const switchRange = range.options[range.selectedIndex].value
@@ -74,11 +90,11 @@ const control = {
         break
     }
     console.log('成功抓到改變的range,編號：', switchRange)
-    // myChart.destroy()
     this.getScoreData()
   },
-  async getScoreData() { //!fetch 資料回來 目前撈７天levelOne的(?range有送去，但serve還沒改)
+  async getScoreData() { // 依據controller 裡面的設定進行 fetch 
     try {
+      console.log('成功進入getScoreData()')
       const title = document.querySelector('#title')
       const userId = Number(title.dataset.id)
       let response = await fetch(`/admin//api/cgScore/${userId}?range=${this.currentRange}&level=${this.currentLevel}`)
@@ -109,6 +125,8 @@ const control = {
 }
 
 const model = {
+  range: document.querySelector('#range'),
+  levelBtns: document.querySelectorAll('.level-btn'),
   cgData: {
     datasets: [{
       label: '使用時間(秒)', // 線條名稱,
@@ -127,8 +145,15 @@ const model = {
 
 control.getScoreData()
 
-const range = document.querySelector('#range')
-range.addEventListener('change', (event) => {
+model.range.addEventListener('change', (event) => {
   console.log('改變')
   control.setRange()
-});
+})
+
+// const levelBtns = document.querySelectorAll('.level-btn')
+
+model.levelBtns.forEach(levelBtn => {
+  levelBtn.addEventListener('click', onCLickLevel => {
+    control.switchLevel(levelBtn.id)
+  })
+})

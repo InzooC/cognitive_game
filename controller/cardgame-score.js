@@ -23,29 +23,22 @@ const cardGameScoreController = {
   },
   getCgData: async (req, res, next) => {
     try {
-      //! 變項?： range(下拉式), level or all(標籤)
-      //! 先做level1, 所有資料
-      const range = Number(req.query.range)
-      const level2 = req.query.level
-      console.log('range', range)
-      console.log('level-query', level2)
 
-      let level = 'level1' //進入此頁面都先使用level1
+      const range = Number(req.query.range)
+      const level = req.query.level
       const userId = req.params.userId
-      // 先撈７天的資料
-      //用dayjs訂出近七天的日期
-      // 用每天去撈最低duration的資料
       //! 之後用rawSQL來簡化code
       const cardGame = await Game.findOne({ where: { game_name: 'Match 10 Card Game' }, attributes: ['id'], raw: true, nest: true })
       const levelId = await Level.findOne({ where: { level_name: level }, attributes: ['id'], raw: true, nest: true })
+
       const gameLevel = await GameLevel.findOne({
         where: {
           game_id: cardGame.id,
           level_id: levelId.id
         }, raw: true, nest: true
       })
+
       let date = range === 'total' ? null : dateFn(range) //依range找出日期
-      console.log('date', date)
       function dateFn(mount) { //找出包含今天的前mount天，以及今天後一天作為range(含下不含上)
         let value = []
         for (i = -1; i < mount; i++) {
@@ -63,6 +56,7 @@ const cardGameScoreController = {
         FROM GameRecords 
         WHERE  
           user_id = ${userId}
+          AND game_level_id = ${gameLevel.id}
         ORDER BY created_at ASC;`
           , { raw: true, nest: true, type: sequelize.QueryTypes.SELECT }
         )
@@ -75,6 +69,7 @@ const cardGameScoreController = {
           (created_at >= CAST('${date[0]}' AS DATE))
           AND(created_at <= CAST('${date[date.length - 1]}' AS DATE))
           AND (user_id = ${userId})
+          AND game_level_id = ${gameLevel.id}
         ORDER BY created_at ASC;`
           , { raw: true, nest: true, type: sequelize.QueryTypes.SELECT }
         )
@@ -87,7 +82,6 @@ const cardGameScoreController = {
           date: dayjs(e.created_at).format('YYYY-MM-DD')
         }
       })
-      console.log('formatData', formatData)
 
       const renewData = checkData(formatData) //選出每日最佳成績
       function checkData(data) {
@@ -101,7 +95,6 @@ const cardGameScoreController = {
         }
         return arr
       }
-      console.log('renewData', renewData)
 
       let finalData = []
       if (date.length === 0) { // 沒有限定日期範圍時，直接轉成finalData
@@ -124,7 +117,6 @@ const cardGameScoreController = {
           return tempArr
         }
       }
-      console.log('finalData', finalData)
 
       res.json({
         status: 'success',
