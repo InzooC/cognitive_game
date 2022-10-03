@@ -1,4 +1,5 @@
 'use strict';
+const dayjs = require('dayjs')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -6,14 +7,15 @@ module.exports = {
     const gameLevelId = await queryInterface.sequelize.query(`SELECT id FROM GameLevels`, { type: queryInterface.sequelize.QueryTypes.SELECT })
     const recordList = []
     await usersId.forEach(user => {
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 30; i++) {
+        let d = dayjs().subtract(Math.floor(Math.random() * 30), 'day').format()
         recordList.push({
-          duration: 300,
+          duration: (Math.floor(Math.random() * 10) + 20),
           point: 123,
           user_id: user.id,
           game_level_id: gameLevelId[Math.floor(Math.random() * gameLevelId.length)].id,
-          created_at: new Date(),
-          updated_at: new Date()
+          created_at: d,
+          updated_at: d
         })
       }
     })
